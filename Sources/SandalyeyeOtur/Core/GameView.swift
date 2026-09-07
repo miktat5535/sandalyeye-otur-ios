@@ -54,13 +54,11 @@ final class GameView: UIView {
         ctx.addLine(to: CGPoint(x: viewport.designWidth, y: viewport.horizonY))
         ctx.strokePath()
 
-        // Miko yer tutucu: zeminde, merkezde bir daire
-        let mikoR: CGFloat = GameConstants.mikoHeight * 0.18
-        ctx.setFillColor(UIColor(red: 1, green: 0.42, blue: 0.42, alpha: 1).cgColor)
-        ctx.fillEllipse(in: CGRect(
-            x: viewport.centerX - mikoR, y: viewport.groundY - mikoR * 2,
-            width: mikoR * 2, height: mikoR * 2
-        ))
+        // Gercek Miko cizimi: ayakta, hafif nefes alan durus.
+        var pose = Pose()
+        pose.face = .happy
+        MikoArtist.draw(ctx, x: viewport.centerX, groundY: viewport.groundY,
+                         height: GameConstants.mikoHeight, pose: pose, skin: .miko)
 
         ctx.restoreGState()
 
