@@ -6,10 +6,10 @@ import UIKit
 /// bir servisin somut uygulamasini degistirmek (NoOp -> AdMob/StoreKit) TEK
 /// satirdir. (bkz. Services.kt)
 ///
-/// **Gecici durum:** `ads`/`billing` su an NoOp — gercek AdMob/StoreKit 2
-/// entegrasyonu ayri bir asamada eklenecek (Android'deki NoOpAdService'in
-/// PHASE 9'da AdMobAdService'e degismesiyle ayni desen). Oynanis kodu bu
-/// degisiklikten ETKILENMEZ, sadece bu dosyadaki iki satir degisir.
+/// `ads`/`billing` gercek AdMob/StoreKit 2 uygulamalaridir (AdMobAdService /
+/// StoreKit2BillingService). Simulator ya da CI'da agsiz calisirken her ikisi
+/// de sessizce basarisiz olur ve oyun NoOp gibi calismaya devam eder (kural
+/// 40: reklam/satin alma hatasi oyunu asla cokertmez).
 final class Services {
     static let shared = Services()
 
@@ -21,8 +21,8 @@ final class Services {
     let haptics: Haptics
     let daily: Daily
 
-    private(set) var ads: AdService = NoOpAdService()
-    private(set) var billing: BillingService = NoOpBillingService()
+    private(set) var ads: AdService
+    private(set) var billing: BillingService
     let adPolicy: InterstitialPolicy
     let granter: PurchaseGranter
     #if DEBUG
@@ -45,9 +45,20 @@ final class Services {
         music = Music(save: save)
         haptics = Haptics(save: save)
         adPolicy = InterstitialPolicy(save: save)
-        granter = PurchaseGranter(save: save, wallet: wallet)
+        let granter = PurchaseGranter(save: save, wallet: wallet)
+        self.granter = granter
         daily = Daily(save: save, wallet: wallet)
         daily.refreshIfNeeded()
+
+        // Gercek AdMob/StoreKit 2 uygulamalari. Reklam birimi kimlikleri gizli
+        // degildir (App Store/AdMob konsolunda herkese acik alanlardir), bu
+        // yuzden dogrudan burada sabit kodludur - Android'deki string
+        // kaynaklarinin ayni karsiligi. (bkz. AdMobAdService.kt cagri yeri)
+        ads = AdMobAdService(
+            rewardedAdUnitID: "ca-app-pub-8580294286333632/7884844933",
+            interstitialAdUnitID: "ca-app-pub-8580294286333632/2778294815"
+        )
+        billing = StoreKit2BillingService(granter: granter)
     }
 
     /// Magaza ve odullu reklam icin gecerli bir sunum denetleyicisi gerekir.
