@@ -44,6 +44,10 @@ final class GameplayScreen: Screen {
     private var mikoH: CGFloat = 320
     private var chairH: CGFloat = 200
     private var walkSpeed: CGFloat = 260
+    /// Yuruyus yonu: +1 ileri, -1 geri (sandalyeyi kacirinca DONUS hakki).
+    private var walkDir: CGFloat = 1
+    /// Bu bolumde donus hakki zaten kullanildi mi (yalnizca BIR kez donebilir).
+    private var bounced = false
     private var sitStartX: CGFloat = 0
     private var tolerance: CGFloat = 70
     private var attempts = 0
@@ -133,6 +137,8 @@ final class GameplayScreen: Screen {
         }
 
         mikoX = vp.playX(-0.16)
+        walkDir = 1
+        bounced = false
         animator.reset()
         animator.setState(.walk)
         camera.reset(vp.centerX)
@@ -207,7 +213,7 @@ final class GameplayScreen: Screen {
             if phaseTime > 0.25 { setPhase(.walk) }
 
         case .walk:
-            mikoX += walkSpeed * dt
+            mikoX += walkSpeed * walkDir * dt
             // MAGNET karakteri ceker
             for ch in chairs {
                 if let magnet = ch.behaviour as? MagnetBehaviour { mikoX += magnet.pullThisFrame }
@@ -215,9 +221,22 @@ final class GameplayScreen: Screen {
             animator.update(dt)
             updateRivals(dt, vp)
 
-            // Sandalyeyi gecti mi?
-            if let last = chairs.max(by: { $0.x < $1.x }) {
+            // Sandalyeyi (ileri yonde) gecti mi? Ilk geciste oyun BITMEZ -
+            // karakter ekran kenarina kadar gidip GERI DONER, sandalyeyi
+            // ikinci kez yakalama sansi verir. Donus de kacirilirsa (geri
+            // yonde baslangic noktasini gecerse) bolum kaybedilir.
+            if walkDir > 0, let last = chairs.max(by: { $0.x < $1.x }) {
                 if mikoX > last.x + tolerance + vp.playWidth * 0.10 {
+                    if !bounced {
+                        bounced = true
+                        walkDir = -1
+                        services.sound.play(.menu, volume: 0.5)
+                    } else {
+                        fail(vp, .miss, .somersault)
+                    }
+                }
+            } else if walkDir < 0, let first = chairs.min(by: { $0.x < $1.x }) {
+                if mikoX < first.x - tolerance - vp.playWidth * 0.10 {
                     fail(vp, .miss, .somersault)
                 }
             }
@@ -228,8 +247,9 @@ final class GameplayScreen: Screen {
 
         case .sitting:
             // Oturma hamlesi sirasinda ileri atilis: hiz sifira iner.
+            // walkDir: donus sirasinda oturuluyorsa atilis da GERI yonde olmali.
             let p = (phaseTime / MikoAnimator.sitDuration).clamped(0, 1)
-            mikoX += walkSpeed * (1 - p) * dt
+            mikoX += walkSpeed * walkDir * (1 - p) * dt
             animator.update(dt)
             updateRivals(dt, vp)
             if animator.finished { resolve(vp) }
@@ -504,10 +524,19 @@ final class GameplayScreen: Screen {
                              pose: a.pose, skin: CharacterCatalog.rival)
         }
 
-        // Miko
+        // Miko - geri donerken (walkDir < 0) kendi ekseninde yatayda aynalanir,
+        // boylece yuruyus yonunu gorsel olarak da takip eder.
         let skin = CharacterCatalog.skin(services.save.data.selectedCharacter)
-        MikoArtist.draw(c, x: mikoX + animator.offsetX, groundY: vp.groundY + animator.offsetY, height: mikoH,
+        let mikoDrawX = mikoX + animator.offsetX
+        if walkDir < 0 {
+            c.saveGState()
+            c.translateBy(x: mikoDrawX, y: 0)
+            c.scaleBy(x: -1, y: 1)
+            c.translateBy(x: -mikoDrawX, y: 0)
+        }
+        MikoArtist.draw(c, x: mikoDrawX, groundY: vp.groundY + animator.offsetY, height: mikoH,
                          pose: animator.pose, skin: skin)
+        if walkDir < 0 { c.restoreGState() }
 
         for ch in chairs where !ch.gone && ch.alpha > 0.02 {
             ChairArtist.draw(c, x: ch.x, groundY: ch.y, height: ch.height, style: ch.style,

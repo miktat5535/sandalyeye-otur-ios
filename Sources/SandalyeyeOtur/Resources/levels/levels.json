@@ -517,7 +517,7 @@
   {
    "id": 29,
    "difficulty": 2,
-   "tolerance": 47.1,
+   "tolerance": 54.0,
    "walkSpeed": 1.0,
    "speedScale": 1.0,
    "reward": 100,
@@ -527,15 +527,15 @@
      "style": "chair_office",
      "behaviour": "SWAP",
      "xRatio": 0.38,
-     "speed": 1.43,
-     "period": 1.58
+     "speed": 1.2,
+     "period": 1.8
     },
     {
      "style": "chair_cardboard",
      "behaviour": "SWAP",
      "xRatio": 0.7,
-     "speed": 1.43,
-     "period": 1.58,
+     "speed": 1.2,
+     "period": 1.8,
      "fake": true
     }
    ]
@@ -543,7 +543,7 @@
   {
    "id": 30,
    "difficulty": 2,
-   "tolerance": 46.0,
+   "tolerance": 52.0,
    "walkSpeed": 1.0,
    "speedScale": 1.0,
    "reward": 200,
@@ -553,15 +553,15 @@
      "style": "chair_plastic",
      "behaviour": "SWAP",
      "xRatio": 0.38,
-     "speed": 1.5,
-     "period": 1.5
+     "speed": 1.25,
+     "period": 1.75
     },
     {
      "style": "chair_gaming",
      "behaviour": "SWAP",
      "xRatio": 0.7,
-     "speed": 1.5,
-     "period": 1.5,
+     "speed": 1.25,
+     "period": 1.75,
      "fake": true
     }
    ],
@@ -570,7 +570,7 @@
   {
    "id": 31,
    "difficulty": 2,
-   "tolerance": 52.0,
+   "tolerance": 60.0,
    "walkSpeed": 1.0,
    "speedScale": 1.0,
    "reward": 100,
@@ -580,8 +580,8 @@
      "style": "chair_picnic",
      "behaviour": "JUMP",
      "xRatio": 0.62,
-     "amplitude": 120.0,
-     "period": 1.5
+     "amplitude": 95.0,
+     "period": 1.7
     }
    ],
    "hint": "Havadayken oturamazsin"
