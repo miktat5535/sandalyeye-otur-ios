@@ -85,6 +85,9 @@ workflows:
       vars:
         XCODE_SCHEME: "SandalyeyeOtur"
         BUNDLE_ID: "com.miktat55.sitdown"
+        # App Store Connect'teki SAYISAL Apple ID (appstoreconnect.apple.com/apps/<bu>/...).
+        # get-latest-testflight-build-number bundle ID'yi KABUL ETMEZ, 404 doner.
+        APP_STORE_APPLE_ID: "6809317957"
         ADMOB_APP_ID: $ADMOB_APP_ID_IOS
       groups:
         - appstore_credentials
@@ -103,7 +106,14 @@ workflows:
           xcode-project use-profiles
       - name: Bump build number
         script: |
-          LATEST=$(app-store-connect get-latest-app-store-build-number "$BUNDLE_ID" || echo 0)
+          # get-latest-*-build-number komutlari BUNDLE ID DEGIL, SAYISAL Apple
+          # ID bekler (kanit: onceki denemede bundle ID verilince 404 "no
+          # resource of type apps" hatasi -> LATEST sessizce 0'a dustu ->
+          # agvtool tekrar "1" yazdi -> Apple "deger zaten kullanildi" dedi).
+          # TestFlight'a hic App Store surumu gonderilmedigi icin
+          # get-latest-app-store-build-number HER ZAMAN bos doner; asil
+          # ihtiyacimiz olan TestFlight build numarasidir.
+          LATEST=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID" || echo 0)
           agvtool new-version -all $(($LATEST + 1))
       - name: Build ipa
         script: |
