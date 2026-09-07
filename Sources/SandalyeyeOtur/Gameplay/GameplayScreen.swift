@@ -1,4 +1,4 @@
-import CoreGraphics
+import UIKit
 
 /// Oynanis ekrani. Oyunun butun dongusu burada:
 /// hazirlik -> yuruyus -> dokunma -> oturma hamlesi -> karar -> sonuc.
