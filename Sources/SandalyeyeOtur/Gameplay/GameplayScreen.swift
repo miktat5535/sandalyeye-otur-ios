@@ -96,11 +96,17 @@ final class GameplayScreen: Screen {
         walkSpeed = GameConstants.mikoWalkSpeed * spec.walkSpeed
 
         chairs.removeAll()
+        // Oyuncunun magazadan sectigi/satin aldigi sandalye GERCEK (hedef)
+        // sandalyeye uygulanir - "satin aldigin sandalye oyunda gorunmuyor"
+        // sikayetinin duzeltmesi. Sahte (fake) sandalyeler bolum tasarimindaki
+        // kendi gorunumunu korur (zaten gercekten farkli bir stille cizilir,
+        // bu yuzden kamuflaj bozulmaz - bkz. levels.json).
+        let equippedChair = ChairCatalog.style(services.save.data.selectedChair)
         for cs in spec.chairs {
             let actor = ChairActor()
             let params = ChairParams(speed: cs.speed, amplitude: cs.amplitude, triggerDistance: cs.triggerDistance, period: cs.period)
             actor.reset(
-                style: ChairCatalog.style(cs.style),
+                style: cs.fake ? ChairCatalog.style(cs.style) : equippedChair,
                 behaviour: ChairBehaviours.create(cs.behaviour, params),
                 x: vp.playX(cs.xRatio),
                 y: vp.groundY,
