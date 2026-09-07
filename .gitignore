@@ -1,0 +1,15 @@
+# Xcode
+*.xcodeproj/
+*.xcworkspace/
+DerivedData/
+build/
+screenshots/
+.build/
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Codemagic secrets never live in the repo
+*.p8
+*.mobileprovision
+*.p12

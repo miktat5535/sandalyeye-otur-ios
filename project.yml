@@ -1,0 +1,54 @@
+name: SandalyeyeOtur
+options:
+  bundleIdPrefix: com.miktat55
+  deploymentTarget:
+    iOS: "16.0"
+configs:
+  Debug: debug
+  Release: release
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    ENABLE_BITCODE: NO
+targets:
+  SandalyeyeOtur:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources/SandalyeyeOtur
+    resources:
+      - path: Sources/SandalyeyeOtur/Resources
+    info:
+      path: Sources/SandalyeyeOtur/Info.plist
+      properties:
+        CFBundleDisplayName: Sandalyeye Otur
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+        UIRequiresFullScreen: true
+        UIViewControllerBasedStatusBarAppearance: false
+        ITSAppUsesNonExemptEncryption: false
+        GADApplicationIdentifier: "$(ADMOB_APP_ID)"
+        SKAdNetworkItems: []
+        NSUserTrackingUsageDescription: "Reklamların size uygun gösterilmesi için kullanılır. İzin vermeseniz de oyun tam olarak oynanabilir."
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.miktat55.sitdown
+        TARGETED_DEVICE_FAMILY: "1"
+        INFOPLIST_KEY_UILaunchScreen_Generation: NO
+    dependencies:
+      - package: GoogleMobileAds
+    scheme:
+      testTargets: []
+      configVariants:
+        Debug:
+          config: Debug
+        Release:
+          config: Release
+packages:
+  GoogleMobileAds:
+    url: https://github.com/googleads/swift-package-manager-google-mobile-ads.git
+    from: 11.13.0

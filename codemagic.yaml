@@ -1,0 +1,94 @@
+workflows:
+  # -------------------------------------------------------------------
+  # Gorsel dogrulama: Mac'imiz yok, bu yuzden her push'ta simulator'da
+  # calistirip ekran goruntusu aliyoruz. Claude bu PNG'leri artifact
+  # olarak indirip inceleyip kod duzeltmesi yapiyor.
+  # -------------------------------------------------------------------
+  simulator-preview:
+    name: Simulator Preview (screenshots)
+    max_build_duration: 30
+    instance_type: mac_mini_m2
+    environment:
+      xcode: latest
+      vars:
+        XCODE_SCHEME: "SandalyeyeOtur"
+    scripts:
+      - name: Install XcodeGen
+        script: brew install xcodegen
+      - name: Generate Xcode project
+        script: xcodegen generate
+      - name: Boot simulator
+        script: |
+          xcrun simctl boot "iPhone 15" || true
+          xcrun simctl bootstatus "iPhone 15" -b
+      - name: Build for simulator
+        script: |
+          xcodebuild -project SandalyeyeOtur.xcodeproj \
+            -scheme "$XCODE_SCHEME" \
+            -sdk iphonesimulator \
+            -destination 'platform=iOS Simulator,name=iPhone 15' \
+            -derivedDataPath build \
+            build
+      - name: Install & launch on simulator
+        script: |
+          APP_PATH=$(find build -name "*.app" -path "*iphonesimulator*" | head -1)
+          xcrun simctl install "iPhone 15" "$APP_PATH"
+          xcrun simctl launch "iPhone 15" com.miktat55.sitdown
+          sleep 6
+      - name: Capture screenshots
+        script: |
+          mkdir -p screenshots
+          xcrun simctl io "iPhone 15" screenshot screenshots/01_launch.png
+    artifacts:
+      - screenshots/*.png
+      - build/**/*.app
+
+  # -------------------------------------------------------------------
+  # TestFlight'a gercek imzali derleme. App Store Connect API anahtari
+  # Codemagic panelinde (Teams > Integrations) tanimlanmis olmali.
+  # -------------------------------------------------------------------
+  release-testflight:
+    name: Release to TestFlight
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    integrations:
+      app_store_connect: sandalyeye_otur_asc
+    environment:
+      xcode: latest
+      vars:
+        XCODE_SCHEME: "SandalyeyeOtur"
+        BUNDLE_ID: "com.miktat55.sitdown"
+        ADMOB_APP_ID: $ADMOB_APP_ID_IOS
+      groups:
+        - appstore_credentials
+    scripts:
+      - name: Install XcodeGen
+        script: brew install xcodegen
+      - name: Generate Xcode project
+        script: xcodegen generate
+      - name: Set up code signing
+        script: |
+          keychain initialize
+          app-store-connect fetch-signing-files "$BUNDLE_ID" \
+            --type IOS_APP_STORE \
+            --create
+          keychain add-certificates
+          xcode-project use-profiles
+      - name: Bump build number
+        script: |
+          LATEST=$(app-store-connect get-latest-app-store-build-number "$BUNDLE_ID" || echo 0)
+          agvtool new-version -all $(($LATEST + 1))
+      - name: Build ipa
+        script: |
+          xcode-project build-ipa \
+            --project "SandalyeyeOtur.xcodeproj" \
+            --scheme "$XCODE_SCHEME"
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+        beta_groups:
+          - Internal Testers

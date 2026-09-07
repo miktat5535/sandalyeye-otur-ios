@@ -1,0 +1,1991 @@
+{
+ "version": 1,
+ "levels": [
+  {
+   "id": 1,
+   "difficulty": 1,
+   "tolerance": 78.0,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "default",
+   "chairs": [
+    {
+     "style": "chair_wood",
+     "behaviour": "STATIC",
+     "xRatio": 0.62
+    }
+   ],
+   "hint": "Sandalyeye gelince DOKUN"
+  },
+  {
+   "id": 2,
+   "difficulty": 1,
+   "tolerance": 76.0,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "default",
+   "chairs": [
+    {
+     "style": "chair_office",
+     "behaviour": "STATIC",
+     "xRatio": 0.62
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "difficulty": 1,
+   "tolerance": 74.0,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "default",
+   "chairs": [
+    {
+     "style": "chair_plastic",
+     "behaviour": "STATIC",
+     "xRatio": 0.62
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "difficulty": 1,
+   "tolerance": 72.0,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "default",
+   "chairs": [
+    {
+     "style": "chair_wood",
+     "behaviour": "STATIC",
+     "xRatio": 0.62
+    }
+   ],
+   "hint": "Tam ortasina otur, daha cok puan"
+  },
+  {
+   "id": 5,
+   "difficulty": 1,
+   "tolerance": 70.0,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "default",
+   "chairs": [
+    {
+     "style": "chair_office",
+     "behaviour": "STATIC",
+     "xRatio": 0.62
+    }
+   ]
+  },
+  {
+   "id": 6,
+   "difficulty": 1,
+   "tolerance": 68.0,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "default",
+   "chairs": [
+    {
+     "style": "chair_plastic",
+     "behaviour": "STATIC",
+     "xRatio": 0.62
+    }
+   ]
+  },
+  {
+   "id": 7,
+   "difficulty": 1,
+   "tolerance": 66.0,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "default",
+   "chairs": [
+    {
+     "style": "chair_wood",
+     "behaviour": "STATIC",
+     "xRatio": 0.62
+    }
+   ]
+  },
+  {
+   "id": 8,
+   "difficulty": 1,
+   "tolerance": 64.0,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "default",
+   "chairs": [
+    {
+     "style": "chair_office",
+     "behaviour": "STATIC",
+     "xRatio": 0.62
+    }
+   ]
+  },
+  {
+   "id": 9,
+   "difficulty": 1,
+   "tolerance": 62.0,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "default",
+   "chairs": [
+    {
+     "style": "chair_plastic",
+     "behaviour": "STATIC",
+     "xRatio": 0.62
+    }
+   ]
+  },
+  {
+   "id": 10,
+   "difficulty": 1,
+   "tolerance": 60.0,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 200,
+   "theme": "default",
+   "chairs": [
+    {
+     "style": "chair_wood",
+     "behaviour": "STATIC",
+     "xRatio": 0.62
+    }
+   ],
+   "special": true
+  },
+  {
+   "id": 11,
+   "difficulty": 1,
+   "tolerance": 60.0,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "sunset",
+   "chairs": [
+    {
+     "style": "chair_office",
+     "behaviour": "SLIDE",
+     "xRatio": 0.6,
+     "speed": 0.7,
+     "amplitude": 90.0
+    }
+   ],
+   "hint": "Sandalye artik duruyor degil"
+  },
+  {
+   "id": 12,
+   "difficulty": 1,
+   "tolerance": 58.9,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "sunset",
+   "chairs": [
+    {
+     "style": "chair_plastic",
+     "behaviour": "SLIDE",
+     "xRatio": 0.6,
+     "speed": 0.77,
+     "amplitude": 101.1
+    }
+   ]
+  },
+  {
+   "id": 13,
+   "difficulty": 1,
+   "tolerance": 57.8,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "sunset",
+   "chairs": [
+    {
+     "style": "chair_wood",
+     "behaviour": "SLIDE",
+     "xRatio": 0.6,
+     "speed": 0.83,
+     "amplitude": 112.2
+    }
+   ]
+  },
+  {
+   "id": 14,
+   "difficulty": 1,
+   "tolerance": 56.7,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "sunset",
+   "chairs": [
+    {
+     "style": "chair_office",
+     "behaviour": "SLIDE",
+     "xRatio": 0.6,
+     "speed": 0.9,
+     "amplitude": 123.3
+    }
+   ]
+  },
+  {
+   "id": 15,
+   "difficulty": 1,
+   "tolerance": 55.6,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "sunset",
+   "chairs": [
+    {
+     "style": "chair_plastic",
+     "behaviour": "SLIDE",
+     "xRatio": 0.6,
+     "speed": 0.97,
+     "amplitude": 134.4
+    }
+   ]
+  },
+  {
+   "id": 16,
+   "difficulty": 1,
+   "tolerance": 54.4,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "sunset",
+   "chairs": [
+    {
+     "style": "chair_wood",
+     "behaviour": "SLIDE",
+     "xRatio": 0.6,
+     "speed": 1.03,
+     "amplitude": 145.6
+    }
+   ]
+  },
+  {
+   "id": 17,
+   "difficulty": 1,
+   "tolerance": 53.3,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "sunset",
+   "chairs": [
+    {
+     "style": "chair_office",
+     "behaviour": "SLIDE",
+     "xRatio": 0.6,
+     "speed": 1.1,
+     "amplitude": 156.7
+    }
+   ]
+  },
+  {
+   "id": 18,
+   "difficulty": 1,
+   "tolerance": 52.2,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "sunset",
+   "chairs": [
+    {
+     "style": "chair_plastic",
+     "behaviour": "SLIDE",
+     "xRatio": 0.6,
+     "speed": 1.17,
+     "amplitude": 167.8
+    }
+   ]
+  },
+  {
+   "id": 19,
+   "difficulty": 1,
+   "tolerance": 51.1,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "sunset",
+   "chairs": [
+    {
+     "style": "chair_wood",
+     "behaviour": "SLIDE",
+     "xRatio": 0.6,
+     "speed": 1.23,
+     "amplitude": 178.9
+    }
+   ]
+  },
+  {
+   "id": 20,
+   "difficulty": 1,
+   "tolerance": 50.0,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 200,
+   "theme": "sunset",
+   "chairs": [
+    {
+     "style": "chair_office",
+     "behaviour": "SLIDE",
+     "xRatio": 0.6,
+     "speed": 1.3,
+     "amplitude": 190.0
+    }
+   ],
+   "special": true
+  },
+  {
+   "id": 21,
+   "difficulty": 2,
+   "tolerance": 56.0,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "meadow",
+   "chairs": [
+    {
+     "style": "chair_picnic",
+     "behaviour": "STATIC",
+     "xRatio": 0.36,
+     "fake": true
+    },
+    {
+     "style": "chair_plastic",
+     "behaviour": "STATIC",
+     "xRatio": 0.72
+    }
+   ],
+   "hint": "Ikisinden biri sahte"
+  },
+  {
+   "id": 22,
+   "difficulty": 2,
+   "tolerance": 54.9,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "meadow",
+   "chairs": [
+    {
+     "style": "chair_folding",
+     "behaviour": "STATIC",
+     "xRatio": 0.36
+    },
+    {
+     "style": "chair_wood",
+     "behaviour": "STATIC",
+     "xRatio": 0.72,
+     "fake": true
+    }
+   ]
+  },
+  {
+   "id": 23,
+   "difficulty": 2,
+   "tolerance": 53.8,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "meadow",
+   "chairs": [
+    {
+     "style": "chair_barstool",
+     "behaviour": "STATIC",
+     "xRatio": 0.36,
+     "fake": true
+    },
+    {
+     "style": "chair_office",
+     "behaviour": "STATIC",
+     "xRatio": 0.72
+    }
+   ]
+  },
+  {
+   "id": 24,
+   "difficulty": 2,
+   "tolerance": 52.7,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "meadow",
+   "chairs": [
+    {
+     "style": "chair_cardboard",
+     "behaviour": "STATIC",
+     "xRatio": 0.36
+    },
+    {
+     "style": "chair_plastic",
+     "behaviour": "STATIC",
+     "xRatio": 0.72,
+     "fake": true
+    }
+   ]
+  },
+  {
+   "id": 25,
+   "difficulty": 2,
+   "tolerance": 51.6,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "meadow",
+   "chairs": [
+    {
+     "style": "chair_gaming",
+     "behaviour": "ROTATE",
+     "xRatio": 0.62,
+     "speed": 1.07
+    }
+   ],
+   "hint": "Donen sandalyenin yuzeyi daralir"
+  },
+  {
+   "id": 26,
+   "difficulty": 2,
+   "tolerance": 50.4,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "meadow",
+   "chairs": [
+    {
+     "style": "chair_picnic",
+     "behaviour": "ROTATE",
+     "xRatio": 0.62,
+     "speed": 1.13
+    }
+   ]
+  },
+  {
+   "id": 27,
+   "difficulty": 2,
+   "tolerance": 49.3,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "meadow",
+   "chairs": [
+    {
+     "style": "chair_folding",
+     "behaviour": "ROTATE",
+     "xRatio": 0.62,
+     "speed": 1.2
+    }
+   ]
+  },
+  {
+   "id": 28,
+   "difficulty": 2,
+   "tolerance": 48.2,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "meadow",
+   "chairs": [
+    {
+     "style": "chair_wood",
+     "behaviour": "SWAP",
+     "xRatio": 0.38,
+     "speed": 1.37,
+     "period": 1.66
+    },
+    {
+     "style": "chair_barstool",
+     "behaviour": "SWAP",
+     "xRatio": 0.7,
+     "speed": 1.37,
+     "period": 1.66,
+     "fake": true
+    }
+   ],
+   "hint": "Gozunu dogru olandan ayirma"
+  },
+  {
+   "id": 29,
+   "difficulty": 2,
+   "tolerance": 47.1,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "meadow",
+   "chairs": [
+    {
+     "style": "chair_office",
+     "behaviour": "SWAP",
+     "xRatio": 0.38,
+     "speed": 1.43,
+     "period": 1.58
+    },
+    {
+     "style": "chair_cardboard",
+     "behaviour": "SWAP",
+     "xRatio": 0.7,
+     "speed": 1.43,
+     "period": 1.58,
+     "fake": true
+    }
+   ]
+  },
+  {
+   "id": 30,
+   "difficulty": 2,
+   "tolerance": 46.0,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 200,
+   "theme": "meadow",
+   "chairs": [
+    {
+     "style": "chair_plastic",
+     "behaviour": "SWAP",
+     "xRatio": 0.38,
+     "speed": 1.5,
+     "period": 1.5
+    },
+    {
+     "style": "chair_gaming",
+     "behaviour": "SWAP",
+     "xRatio": 0.7,
+     "speed": 1.5,
+     "period": 1.5,
+     "fake": true
+    }
+   ],
+   "special": true
+  },
+  {
+   "id": 31,
+   "difficulty": 2,
+   "tolerance": 52.0,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "night",
+   "chairs": [
+    {
+     "style": "chair_picnic",
+     "behaviour": "JUMP",
+     "xRatio": 0.62,
+     "amplitude": 120.0,
+     "period": 1.5
+    }
+   ],
+   "hint": "Havadayken oturamazsin"
+  },
+  {
+   "id": 32,
+   "difficulty": 2,
+   "tolerance": 50.9,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "night",
+   "chairs": [
+    {
+     "style": "chair_folding",
+     "behaviour": "JUMP",
+     "xRatio": 0.62,
+     "amplitude": 128.9,
+     "period": 1.44
+    }
+   ]
+  },
+  {
+   "id": 33,
+   "difficulty": 2,
+   "tolerance": 49.8,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "night",
+   "chairs": [
+    {
+     "style": "chair_barstool",
+     "behaviour": "JUMP",
+     "xRatio": 0.62,
+     "amplitude": 137.8,
+     "period": 1.38
+    }
+   ]
+  },
+  {
+   "id": 34,
+   "difficulty": 2,
+   "tolerance": 48.7,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "night",
+   "chairs": [
+    {
+     "style": "chair_cardboard",
+     "behaviour": "JUMP",
+     "xRatio": 0.62,
+     "amplitude": 146.7,
+     "period": 1.32
+    }
+   ]
+  },
+  {
+   "id": 35,
+   "difficulty": 2,
+   "tolerance": 47.6,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "night",
+   "chairs": [
+    {
+     "style": "chair_gaming",
+     "behaviour": "JUMP",
+     "xRatio": 0.62,
+     "amplitude": 155.6,
+     "period": 1.26
+    }
+   ]
+  },
+  {
+   "id": 36,
+   "difficulty": 2,
+   "tolerance": 46.4,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "night",
+   "chairs": [
+    {
+     "style": "chair_picnic",
+     "behaviour": "JUMP",
+     "xRatio": 0.62,
+     "amplitude": 164.4,
+     "period": 1.19
+    }
+   ]
+  },
+  {
+   "id": 37,
+   "difficulty": 2,
+   "tolerance": 45.3,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "night",
+   "chairs": [
+    {
+     "style": "chair_folding",
+     "behaviour": "JUMP",
+     "xRatio": 0.62,
+     "amplitude": 173.3,
+     "period": 1.13
+    },
+    {
+     "style": "chair_wood",
+     "behaviour": "SLIDE",
+     "xRatio": 0.32,
+     "amplitude": 110,
+     "fake": true
+    }
+   ]
+  },
+  {
+   "id": 38,
+   "difficulty": 2,
+   "tolerance": 44.2,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "night",
+   "chairs": [
+    {
+     "style": "chair_barstool",
+     "behaviour": "JUMP",
+     "xRatio": 0.62,
+     "amplitude": 182.2,
+     "period": 1.07
+    },
+    {
+     "style": "chair_office",
+     "behaviour": "SLIDE",
+     "xRatio": 0.32,
+     "amplitude": 110,
+     "fake": true
+    }
+   ]
+  },
+  {
+   "id": 39,
+   "difficulty": 2,
+   "tolerance": 43.1,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "night",
+   "chairs": [
+    {
+     "style": "chair_cardboard",
+     "behaviour": "JUMP",
+     "xRatio": 0.62,
+     "amplitude": 191.1,
+     "period": 1.01
+    },
+    {
+     "style": "chair_plastic",
+     "behaviour": "SLIDE",
+     "xRatio": 0.32,
+     "amplitude": 110,
+     "fake": true
+    }
+   ]
+  },
+  {
+   "id": 40,
+   "difficulty": 2,
+   "tolerance": 42.0,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 200,
+   "theme": "night",
+   "chairs": [
+    {
+     "style": "chair_gaming",
+     "behaviour": "JUMP",
+     "xRatio": 0.62,
+     "amplitude": 200.0,
+     "period": 0.95
+    },
+    {
+     "style": "chair_wood",
+     "behaviour": "SLIDE",
+     "xRatio": 0.32,
+     "amplitude": 110,
+     "fake": true
+    }
+   ],
+   "special": true
+  },
+  {
+   "id": 41,
+   "difficulty": 3,
+   "tolerance": 50.0,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "desert",
+   "chairs": [
+    {
+     "style": "chair_picnic",
+     "behaviour": "RUN",
+     "xRatio": 0.55,
+     "speed": 0.8,
+     "amplitude": 150.0,
+     "triggerDistance": 230.0
+    }
+   ],
+   "hint": "Yaklasinca kacar - erken davran"
+  },
+  {
+   "id": 42,
+   "difficulty": 3,
+   "tolerance": 48.9,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "desert",
+   "chairs": [
+    {
+     "style": "chair_folding",
+     "behaviour": "RUN",
+     "xRatio": 0.55,
+     "speed": 0.88,
+     "amplitude": 164.4,
+     "triggerDistance": 240.0
+    }
+   ]
+  },
+  {
+   "id": 43,
+   "difficulty": 3,
+   "tolerance": 47.8,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "desert",
+   "chairs": [
+    {
+     "style": "chair_barstool",
+     "behaviour": "RUN",
+     "xRatio": 0.55,
+     "speed": 0.96,
+     "amplitude": 178.9,
+     "triggerDistance": 250.0
+    }
+   ]
+  },
+  {
+   "id": 44,
+   "difficulty": 3,
+   "tolerance": 46.7,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "desert",
+   "chairs": [
+    {
+     "style": "chair_cardboard",
+     "behaviour": "RUN",
+     "xRatio": 0.55,
+     "speed": 1.03,
+     "amplitude": 193.3
+    }
+   ]
+  },
+  {
+   "id": 45,
+   "difficulty": 3,
+   "tolerance": 45.6,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "desert",
+   "chairs": [
+    {
+     "style": "chair_gaming",
+     "behaviour": "RUN",
+     "xRatio": 0.55,
+     "speed": 1.11,
+     "amplitude": 207.8,
+     "triggerDistance": 270.0
+    }
+   ]
+  },
+  {
+   "id": 46,
+   "difficulty": 3,
+   "tolerance": 44.4,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "desert",
+   "chairs": [
+    {
+     "style": "chair_picnic",
+     "behaviour": "RUN",
+     "xRatio": 0.55,
+     "speed": 1.19,
+     "amplitude": 222.2,
+     "triggerDistance": 280.0
+    }
+   ]
+  },
+  {
+   "id": 47,
+   "difficulty": 3,
+   "tolerance": 43.3,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "desert",
+   "chairs": [
+    {
+     "style": "chair_folding",
+     "behaviour": "RUN",
+     "xRatio": 0.55,
+     "speed": 1.27,
+     "amplitude": 236.7,
+     "triggerDistance": 290.0
+    }
+   ]
+  },
+  {
+   "id": 48,
+   "difficulty": 3,
+   "tolerance": 42.2,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "desert",
+   "chairs": [
+    {
+     "style": "chair_barstool",
+     "behaviour": "RUN",
+     "xRatio": 0.55,
+     "speed": 1.34,
+     "amplitude": 251.1,
+     "triggerDistance": 300.0
+    }
+   ]
+  },
+  {
+   "id": 49,
+   "difficulty": 3,
+   "tolerance": 41.1,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "desert",
+   "chairs": [
+    {
+     "style": "chair_cardboard",
+     "behaviour": "RUN",
+     "xRatio": 0.55,
+     "speed": 1.42,
+     "amplitude": 265.6,
+     "triggerDistance": 310.0
+    }
+   ]
+  },
+  {
+   "id": 50,
+   "difficulty": 3,
+   "tolerance": 40.0,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 200,
+   "theme": "desert",
+   "chairs": [
+    {
+     "style": "chair_gaming",
+     "behaviour": "RUN",
+     "xRatio": 0.55,
+     "speed": 1.5,
+     "amplitude": 280.0,
+     "triggerDistance": 320.0
+    }
+   ],
+   "special": true
+  },
+  {
+   "id": 51,
+   "difficulty": 3,
+   "tolerance": 48.0,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "arena",
+   "chairs": [
+    {
+     "style": "chair_neon",
+     "behaviour": "STATIC",
+     "xRatio": 0.62,
+     "speed": 0.9,
+     "amplitude": 150
+    }
+   ],
+   "rivals": 1,
+   "hint": "Rakip de o sandalyeyi istiyor"
+  },
+  {
+   "id": 52,
+   "difficulty": 3,
+   "tolerance": 47.1,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "arena",
+   "chairs": [
+    {
+     "style": "chair_ice",
+     "behaviour": "STATIC",
+     "xRatio": 0.62,
+     "speed": 0.96,
+     "amplitude": 150
+    }
+   ],
+   "rivals": 1
+  },
+  {
+   "id": 53,
+   "difficulty": 3,
+   "tolerance": 46.2,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "arena",
+   "chairs": [
+    {
+     "style": "chair_balloon",
+     "behaviour": "STATIC",
+     "xRatio": 0.62,
+     "speed": 1.01,
+     "amplitude": 150
+    }
+   ],
+   "rivals": 1
+  },
+  {
+   "id": 54,
+   "difficulty": 3,
+   "tolerance": 45.3,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "arena",
+   "chairs": [
+    {
+     "style": "chair_giant",
+     "behaviour": "SLIDE",
+     "xRatio": 0.62,
+     "speed": 1.07,
+     "amplitude": 150
+    }
+   ],
+   "rivals": 1
+  },
+  {
+   "id": 55,
+   "difficulty": 3,
+   "tolerance": 44.4,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "arena",
+   "chairs": [
+    {
+     "style": "chair_mini",
+     "behaviour": "SLIDE",
+     "xRatio": 0.62,
+     "speed": 1.12,
+     "amplitude": 150
+    }
+   ],
+   "rivals": 1
+  },
+  {
+   "id": 56,
+   "difficulty": 3,
+   "tolerance": 43.6,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "arena",
+   "chairs": [
+    {
+     "style": "chair_roller",
+     "behaviour": "SLIDE",
+     "xRatio": 0.62,
+     "speed": 1.18,
+     "amplitude": 150
+    }
+   ],
+   "rivals": 2
+  },
+  {
+   "id": 57,
+   "difficulty": 3,
+   "tolerance": 42.7,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "arena",
+   "chairs": [
+    {
+     "style": "chair_rocket",
+     "behaviour": "SLIDE",
+     "xRatio": 0.62,
+     "speed": 1.23,
+     "amplitude": 150
+    }
+   ],
+   "rivals": 2
+  },
+  {
+   "id": 58,
+   "difficulty": 3,
+   "tolerance": 41.8,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "arena",
+   "chairs": [
+    {
+     "style": "chair_stool",
+     "behaviour": "RUN",
+     "xRatio": 0.62,
+     "speed": 1.29,
+     "amplitude": 150
+    }
+   ],
+   "rivals": 2
+  },
+  {
+   "id": 59,
+   "difficulty": 3,
+   "tolerance": 40.9,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "arena",
+   "chairs": [
+    {
+     "style": "chair_premium",
+     "behaviour": "RUN",
+     "xRatio": 0.62,
+     "speed": 1.34,
+     "amplitude": 150
+    }
+   ],
+   "rivals": 2
+  },
+  {
+   "id": 60,
+   "difficulty": 3,
+   "tolerance": 40.0,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 200,
+   "theme": "arena",
+   "chairs": [
+    {
+     "style": "chair_throne",
+     "behaviour": "RUN",
+     "xRatio": 0.62,
+     "speed": 1.4,
+     "amplitude": 150
+    }
+   ],
+   "special": true,
+   "rivals": 2
+  },
+  {
+   "id": 61,
+   "difficulty": 4,
+   "tolerance": 46.0,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "fog",
+   "chairs": [
+    {
+     "style": "chair_picnic",
+     "behaviour": "FAKE",
+     "xRatio": 0.4,
+     "triggerDistance": 240.0,
+     "fake": true
+    },
+    {
+     "style": "chair_gold",
+     "behaviour": "STATIC",
+     "xRatio": 0.74
+    }
+   ],
+   "hint": "Bazi sandalyeler yok olur"
+  },
+  {
+   "id": 62,
+   "difficulty": 4,
+   "tolerance": 45.1,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "fog",
+   "chairs": [
+    {
+     "style": "chair_folding",
+     "behaviour": "FAKE",
+     "xRatio": 0.4,
+     "triggerDistance": 246.7,
+     "fake": true
+    },
+    {
+     "style": "chair_silver",
+     "behaviour": "STATIC",
+     "xRatio": 0.74
+    }
+   ]
+  },
+  {
+   "id": 63,
+   "difficulty": 4,
+   "tolerance": 44.2,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "fog",
+   "chairs": [
+    {
+     "style": "chair_barstool",
+     "behaviour": "FAKE",
+     "xRatio": 0.4,
+     "triggerDistance": 253.3,
+     "fake": true
+    },
+    {
+     "style": "chair_neon",
+     "behaviour": "STATIC",
+     "xRatio": 0.74
+    }
+   ]
+  },
+  {
+   "id": 64,
+   "difficulty": 4,
+   "tolerance": 43.3,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "fog",
+   "chairs": [
+    {
+     "style": "chair_cardboard",
+     "behaviour": "FAKE",
+     "xRatio": 0.4,
+     "fake": true
+    },
+    {
+     "style": "chair_ice",
+     "behaviour": "STATIC",
+     "xRatio": 0.74
+    }
+   ]
+  },
+  {
+   "id": 65,
+   "difficulty": 4,
+   "tolerance": 42.4,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "fog",
+   "chairs": [
+    {
+     "style": "chair_gaming",
+     "behaviour": "FAKE",
+     "xRatio": 0.4,
+     "triggerDistance": 266.7,
+     "fake": true
+    },
+    {
+     "style": "chair_balloon",
+     "behaviour": "STATIC",
+     "xRatio": 0.74
+    }
+   ]
+  },
+  {
+   "id": 66,
+   "difficulty": 4,
+   "tolerance": 41.6,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "fog",
+   "chairs": [
+    {
+     "style": "chair_giant",
+     "behaviour": "INVISIBLE",
+     "xRatio": 0.62,
+     "period": 1.61
+    }
+   ],
+   "hint": "Gormesen de yerini hatirla"
+  },
+  {
+   "id": 67,
+   "difficulty": 4,
+   "tolerance": 40.7,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "fog",
+   "chairs": [
+    {
+     "style": "chair_mini",
+     "behaviour": "INVISIBLE",
+     "xRatio": 0.62,
+     "period": 1.53
+    }
+   ]
+  },
+  {
+   "id": 68,
+   "difficulty": 4,
+   "tolerance": 39.8,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "fog",
+   "chairs": [
+    {
+     "style": "chair_roller",
+     "behaviour": "INVISIBLE",
+     "xRatio": 0.62,
+     "period": 1.46
+    }
+   ]
+  },
+  {
+   "id": 69,
+   "difficulty": 4,
+   "tolerance": 38.9,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 100,
+   "theme": "fog",
+   "chairs": [
+    {
+     "style": "chair_rocket",
+     "behaviour": "INVISIBLE",
+     "xRatio": 0.62,
+     "period": 1.38
+    }
+   ]
+  },
+  {
+   "id": 70,
+   "difficulty": 4,
+   "tolerance": 38.0,
+   "walkSpeed": 1.0,
+   "speedScale": 1.0,
+   "reward": 200,
+   "theme": "fog",
+   "chairs": [
+    {
+     "style": "chair_stool",
+     "behaviour": "INVISIBLE",
+     "xRatio": 0.62,
+     "period": 1.3
+    }
+   ],
+   "special": true
+  },
+  {
+   "id": 71,
+   "difficulty": 4,
+   "tolerance": 44.0,
+   "walkSpeed": 1.15,
+   "speedScale": 1.25,
+   "reward": 100,
+   "theme": "neon",
+   "chairs": [
+    {
+     "style": "chair_premium",
+     "behaviour": "SLIDE",
+     "xRatio": 0.58,
+     "speed": 1.2,
+     "amplitude": 180.0,
+     "period": 1.1
+    }
+   ],
+   "hint": "Her sey hizlandi"
+  },
+  {
+   "id": 72,
+   "difficulty": 4,
+   "tolerance": 43.1,
+   "walkSpeed": 1.17,
+   "speedScale": 1.28,
+   "reward": 100,
+   "theme": "neon",
+   "chairs": [
+    {
+     "style": "chair_throne",
+     "behaviour": "RUN",
+     "xRatio": 0.58,
+     "speed": 1.26,
+     "amplitude": 188.9,
+     "period": 1.07
+    }
+   ]
+  },
+  {
+   "id": 73,
+   "difficulty": 4,
+   "tolerance": 42.2,
+   "walkSpeed": 1.19,
+   "speedScale": 1.32,
+   "reward": 100,
+   "theme": "neon",
+   "chairs": [
+    {
+     "style": "chair_gold",
+     "behaviour": "JUMP",
+     "xRatio": 0.58,
+     "speed": 1.31,
+     "amplitude": 197.8,
+     "period": 1.03
+    }
+   ]
+  },
+  {
+   "id": 74,
+   "difficulty": 4,
+   "tolerance": 41.3,
+   "walkSpeed": 1.22,
+   "speedScale": 1.35,
+   "reward": 100,
+   "theme": "neon",
+   "chairs": [
+    {
+     "style": "chair_silver",
+     "behaviour": "ROTATE",
+     "xRatio": 0.58,
+     "speed": 1.37,
+     "amplitude": 206.7,
+     "period": 1.0
+    }
+   ]
+  },
+  {
+   "id": 75,
+   "difficulty": 4,
+   "tolerance": 40.4,
+   "walkSpeed": 1.24,
+   "speedScale": 1.38,
+   "reward": 100,
+   "theme": "neon",
+   "chairs": [
+    {
+     "style": "chair_neon",
+     "behaviour": "SLIDE",
+     "xRatio": 0.58,
+     "speed": 1.42,
+     "amplitude": 215.6,
+     "period": 0.97
+    }
+   ]
+  },
+  {
+   "id": 76,
+   "difficulty": 4,
+   "tolerance": 39.6,
+   "walkSpeed": 1.26,
+   "speedScale": 1.42,
+   "reward": 100,
+   "theme": "neon",
+   "chairs": [
+    {
+     "style": "chair_ice",
+     "behaviour": "RUN",
+     "xRatio": 0.58,
+     "speed": 1.48,
+     "amplitude": 224.4,
+     "period": 0.93
+    }
+   ]
+  },
+  {
+   "id": 77,
+   "difficulty": 4,
+   "tolerance": 38.7,
+   "walkSpeed": 1.28,
+   "speedScale": 1.45,
+   "reward": 100,
+   "theme": "neon",
+   "chairs": [
+    {
+     "style": "chair_balloon",
+     "behaviour": "JUMP",
+     "xRatio": 0.58,
+     "speed": 1.53,
+     "amplitude": 233.3,
+     "period": 0.9
+    }
+   ]
+  },
+  {
+   "id": 78,
+   "difficulty": 4,
+   "tolerance": 37.8,
+   "walkSpeed": 1.31,
+   "speedScale": 1.48,
+   "reward": 100,
+   "theme": "neon",
+   "chairs": [
+    {
+     "style": "chair_giant",
+     "behaviour": "ROTATE",
+     "xRatio": 0.58,
+     "speed": 1.59,
+     "amplitude": 242.2,
+     "period": 0.87
+    }
+   ]
+  },
+  {
+   "id": 79,
+   "difficulty": 4,
+   "tolerance": 36.9,
+   "walkSpeed": 1.33,
+   "speedScale": 1.52,
+   "reward": 100,
+   "theme": "neon",
+   "chairs": [
+    {
+     "style": "chair_mini",
+     "behaviour": "SLIDE",
+     "xRatio": 0.58,
+     "speed": 1.64,
+     "amplitude": 251.1,
+     "period": 0.83
+    }
+   ]
+  },
+  {
+   "id": 80,
+   "difficulty": 4,
+   "tolerance": 36.0,
+   "walkSpeed": 1.35,
+   "speedScale": 1.55,
+   "reward": 200,
+   "theme": "neon",
+   "chairs": [
+    {
+     "style": "chair_roller",
+     "behaviour": "RUN",
+     "xRatio": 0.58,
+     "speed": 1.7,
+     "amplitude": 260.0,
+     "period": 0.8
+    }
+   ],
+   "special": true
+  },
+  {
+   "id": 81,
+   "difficulty": 5,
+   "tolerance": 42.0,
+   "walkSpeed": 1.0,
+   "speedScale": 1.2,
+   "reward": 100,
+   "theme": "storm",
+   "chairs": [
+    {
+     "style": "chair_rocket",
+     "behaviour": "MAGNET",
+     "xRatio": 0.62,
+     "speed": 0.8,
+     "triggerDistance": 280.0
+    }
+   ],
+   "hint": "Miknatis seni ceker - dikkat"
+  },
+  {
+   "id": 82,
+   "difficulty": 5,
+   "tolerance": 41.1,
+   "walkSpeed": 1.0,
+   "speedScale": 1.23,
+   "reward": 100,
+   "theme": "storm",
+   "chairs": [
+    {
+     "style": "chair_stool",
+     "behaviour": "MAGNET",
+     "xRatio": 0.62,
+     "speed": 0.86,
+     "triggerDistance": 288.9
+    }
+   ]
+  },
+  {
+   "id": 83,
+   "difficulty": 5,
+   "tolerance": 40.2,
+   "walkSpeed": 1.0,
+   "speedScale": 1.26,
+   "reward": 100,
+   "theme": "storm",
+   "chairs": [
+    {
+     "style": "chair_premium",
+     "behaviour": "MAGNET",
+     "xRatio": 0.62,
+     "speed": 0.91,
+     "triggerDistance": 297.8
+    }
+   ]
+  },
+  {
+   "id": 84,
+   "difficulty": 5,
+   "tolerance": 39.3,
+   "walkSpeed": 1.0,
+   "speedScale": 1.28,
+   "reward": 100,
+   "theme": "storm",
+   "chairs": [
+    {
+     "style": "chair_throne",
+     "behaviour": "MAGNET",
+     "xRatio": 0.62,
+     "speed": 0.97,
+     "triggerDistance": 306.7
+    }
+   ]
+  },
+  {
+   "id": 85,
+   "difficulty": 5,
+   "tolerance": 38.4,
+   "walkSpeed": 1.0,
+   "speedScale": 1.31,
+   "reward": 100,
+   "theme": "storm",
+   "chairs": [
+    {
+     "style": "chair_gold",
+     "behaviour": "TRAP",
+     "xRatio": 0.62,
+     "speed": 1.12
+    }
+   ],
+   "hint": "Kapaliyken oturamazsin"
+  },
+  {
+   "id": 86,
+   "difficulty": 5,
+   "tolerance": 37.6,
+   "walkSpeed": 1.0,
+   "speedScale": 1.34,
+   "reward": 100,
+   "theme": "storm",
+   "chairs": [
+    {
+     "style": "chair_silver",
+     "behaviour": "TRAP",
+     "xRatio": 0.62,
+     "speed": 1.18
+    }
+   ]
+  },
+  {
+   "id": 87,
+   "difficulty": 5,
+   "tolerance": 36.7,
+   "walkSpeed": 1.0,
+   "speedScale": 1.37,
+   "reward": 100,
+   "theme": "storm",
+   "chairs": [
+    {
+     "style": "chair_neon",
+     "behaviour": "TRAP",
+     "xRatio": 0.62,
+     "speed": 1.23
+    }
+   ]
+  },
+  {
+   "id": 88,
+   "difficulty": 5,
+   "tolerance": 35.8,
+   "walkSpeed": 1.0,
+   "speedScale": 1.39,
+   "reward": 100,
+   "theme": "storm",
+   "chairs": [
+    {
+     "style": "chair_ice",
+     "behaviour": "ROCKET",
+     "xRatio": 0.62,
+     "amplitude": 204.4,
+     "period": 1.21
+    },
+    {
+     "style": "chair_barstool",
+     "behaviour": "FAKE",
+     "xRatio": 0.34,
+     "triggerDistance": 250,
+     "fake": true
+    }
+   ]
+  },
+  {
+   "id": 89,
+   "difficulty": 5,
+   "tolerance": 34.9,
+   "walkSpeed": 1.0,
+   "speedScale": 1.42,
+   "reward": 100,
+   "theme": "storm",
+   "chairs": [
+    {
+     "style": "chair_balloon",
+     "behaviour": "ROCKET",
+     "xRatio": 0.62,
+     "amplitude": 212.2,
+     "period": 1.16
+    },
+    {
+     "style": "chair_cardboard",
+     "behaviour": "FAKE",
+     "xRatio": 0.34,
+     "triggerDistance": 250,
+     "fake": true
+    }
+   ]
+  },
+  {
+   "id": 90,
+   "difficulty": 5,
+   "tolerance": 34.0,
+   "walkSpeed": 1.0,
+   "speedScale": 1.45,
+   "reward": 200,
+   "theme": "storm",
+   "chairs": [
+    {
+     "style": "chair_giant",
+     "behaviour": "ROCKET",
+     "xRatio": 0.62,
+     "amplitude": 220.0,
+     "period": 1.1
+    },
+    {
+     "style": "chair_gaming",
+     "behaviour": "FAKE",
+     "xRatio": 0.34,
+     "triggerDistance": 250,
+     "fake": true
+    }
+   ],
+   "special": true
+  },
+  {
+   "id": 91,
+   "difficulty": 5,
+   "tolerance": 38.0,
+   "walkSpeed": 1.2,
+   "speedScale": 1.35,
+   "reward": 100,
+   "theme": "gold",
+   "chairs": [
+    {
+     "style": "chair_mini",
+     "behaviour": "RUN",
+     "xRatio": 0.52,
+     "speed": 1.6,
+     "amplitude": 300,
+     "triggerDistance": 340
+    },
+    {
+     "style": "chair_picnic",
+     "behaviour": "FAKE",
+     "xRatio": 0.3,
+     "triggerDistance": 240,
+     "fake": true
+    }
+   ],
+   "hint": "Artik her sey ayni anda"
+  },
+  {
+   "id": 92,
+   "difficulty": 5,
+   "tolerance": 37.1,
+   "walkSpeed": 1.22,
+   "speedScale": 1.39,
+   "reward": 100,
+   "theme": "gold",
+   "chairs": [
+    {
+     "style": "chair_roller",
+     "behaviour": "SWAP",
+     "xRatio": 0.36,
+     "speed": 1.6
+    },
+    {
+     "style": "chair_folding",
+     "behaviour": "SWAP",
+     "xRatio": 0.7,
+     "speed": 1.6,
+     "fake": true
+    }
+   ]
+  },
+  {
+   "id": 93,
+   "difficulty": 5,
+   "tolerance": 36.2,
+   "walkSpeed": 1.24,
+   "speedScale": 1.43,
+   "reward": 100,
+   "theme": "gold",
+   "chairs": [
+    {
+     "style": "chair_rocket",
+     "behaviour": "INVISIBLE",
+     "xRatio": 0.6,
+     "period": 1.1
+    },
+    {
+     "style": "chair_barstool",
+     "behaviour": "SLIDE",
+     "xRatio": 0.3,
+     "speed": 1.4,
+     "amplitude": 140,
+     "fake": true
+    }
+   ]
+  },
+  {
+   "id": 94,
+   "difficulty": 5,
+   "tolerance": 35.3,
+   "walkSpeed": 1.27,
+   "speedScale": 1.47,
+   "reward": 100,
+   "theme": "gold",
+   "chairs": [
+    {
+     "style": "chair_stool",
+     "behaviour": "TRAP",
+     "xRatio": 0.62,
+     "speed": 1.5
+    }
+   ]
+  },
+  {
+   "id": 95,
+   "difficulty": 5,
+   "tolerance": 34.4,
+   "walkSpeed": 1.29,
+   "speedScale": 1.51,
+   "reward": 100,
+   "theme": "gold",
+   "chairs": [
+    {
+     "style": "chair_premium",
+     "behaviour": "MAGNET",
+     "xRatio": 0.64,
+     "speed": 1.3,
+     "triggerDistance": 360
+    },
+    {
+     "style": "chair_gaming",
+     "behaviour": "ROTATE",
+     "xRatio": 0.32,
+     "speed": 1.5,
+     "fake": true
+    }
+   ]
+  },
+  {
+   "id": 96,
+   "difficulty": 5,
+   "tolerance": 33.6,
+   "walkSpeed": 1.31,
+   "speedScale": 1.54,
+   "reward": 100,
+   "theme": "gold",
+   "chairs": [
+    {
+     "style": "chair_throne",
+     "behaviour": "ROCKET",
+     "xRatio": 0.6,
+     "amplitude": 230,
+     "period": 1.05
+    }
+   ]
+  },
+  {
+   "id": 97,
+   "difficulty": 5,
+   "tolerance": 32.7,
+   "walkSpeed": 1.33,
+   "speedScale": 1.58,
+   "reward": 100,
+   "theme": "gold",
+   "chairs": [
+    {
+     "style": "chair_gold",
+     "behaviour": "JUMP",
+     "xRatio": 0.58,
+     "amplitude": 210,
+     "period": 0.85
+    },
+    {
+     "style": "chair_folding",
+     "behaviour": "FAKE",
+     "xRatio": 0.3,
+     "triggerDistance": 230,
+     "fake": true
+    }
+   ]
+  },
+  {
+   "id": 98,
+   "difficulty": 5,
+   "tolerance": 31.8,
+   "walkSpeed": 1.36,
+   "speedScale": 1.62,
+   "reward": 100,
+   "theme": "gold",
+   "chairs": [
+    {
+     "style": "chair_silver",
+     "behaviour": "ROTATE",
+     "xRatio": 0.62,
+     "speed": 1.8
+    }
+   ]
+  },
+  {
+   "id": 99,
+   "difficulty": 5,
+   "tolerance": 30.9,
+   "walkSpeed": 1.38,
+   "speedScale": 1.66,
+   "reward": 100,
+   "theme": "gold",
+   "chairs": [
+    {
+     "style": "chair_neon",
+     "behaviour": "RUN",
+     "xRatio": 0.5,
+     "speed": 1.8,
+     "amplitude": 330,
+     "triggerDistance": 360
+    },
+    {
+     "style": "chair_cardboard",
+     "behaviour": "INVISIBLE",
+     "xRatio": 0.28,
+     "period": 1.0,
+     "fake": true
+    }
+   ]
+  },
+  {
+   "id": 100,
+   "difficulty": 5,
+   "tolerance": 30.0,
+   "walkSpeed": 1.4,
+   "speedScale": 1.7,
+   "reward": 200,
+   "theme": "gold",
+   "chairs": [
+    {
+     "style": "chair_premium",
+     "behaviour": "SWAP",
+     "xRatio": 0.34,
+     "speed": 1.8,
+     "period": 1.0
+    },
+    {
+     "style": "chair_gold",
+     "behaviour": "SWAP",
+     "xRatio": 0.68,
+     "speed": 1.8,
+     "period": 1.0,
+     "fake": true
+    }
+   ],
+   "special": true,
+   "hint": "Son sandalye. Otur ve rahatla."
+  }
+ ]
+}
