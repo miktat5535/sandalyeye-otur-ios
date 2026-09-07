@@ -4,10 +4,10 @@ import UIKit
 /// buraya Core Graphics ile cizilir (Kotlin tarafindaki Path/Paint mantigiyla
 /// birebir ayni ruh — immediate-mode, retained sahne grafigi YOK).
 ///
-/// SU AN: sadece Viewport matematigini ve boru hattini (XcodeGen -> Codemagic
-/// -> Simulator -> ekran goruntusu) dogrulayan bir "kanit" cizimi var. Gercek
-/// sanat katmani (MikoArtist/ChairArtist/SceneArtist portlari) Faz 3'te,
-/// Codemagic'in gercek simulator ciktisi gorulup dogrulandiktan sonra gelecek.
+/// SU AN: Viewport + Miko (MikoArtist) + sandalye (ChairArtist) gercek
+/// simulator ciktisinda dogrulandi. Sirada: SceneArtist (arka plan/tema),
+/// MikoAnimator (oturma pozu) ve gercek oturma kompozisyonu (Miko+sandalye
+/// birlikte, su an ikisi sadece yan yana ayakta/bos).
 final class GameView: UIView {
 
     private let viewport = Viewport()
@@ -53,6 +53,13 @@ final class GameView: UIView {
         ctx.move(to: CGPoint(x: 0, y: viewport.horizonY))
         ctx.addLine(to: CGPoint(x: viewport.designWidth, y: viewport.horizonY))
         ctx.strokePath()
+
+        // Sandalye: Miko'nun yaninda, ayakta duruyorken bos halde (henuz oturma
+        // pozu/MikoAnimator portlanmadi — su an sadece ChairArtist'in kendisi
+        // gercek simulator ciktisinda dogrulanacak).
+        ChairArtist.draw(ctx, x: viewport.centerX + GameConstants.mikoHeight * 0.9,
+                          groundY: viewport.groundY, height: GameConstants.chairHeight,
+                          style: .wood)
 
         // Gercek Miko cizimi: ayakta, hafif nefes alan durus.
         var pose = Pose()

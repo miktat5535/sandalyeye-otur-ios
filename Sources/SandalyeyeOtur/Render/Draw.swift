@@ -56,4 +56,29 @@ extension CGContext {
         setFillColor(Palette.shadow.withAlphaComponent(alpha).cgColor)
         fillEllipse(cx: cx, cy: cy, rx: rx, ry: rx * 0.30)
     }
+
+    /// Kapali poligon (perspektif zemin, sandalye oturma yuzeyi trapezi vb.)
+    /// (bkz. Draw.kt `polygon` — orada bir Path nesnesi yeniden kullanilir,
+    /// burada tasima ihtiyaci olmadigi icin dogrudan CGMutablePath kuruluyor.)
+    private func polygonPath(_ points: [CGPoint]) -> CGMutablePath {
+        let path = CGMutablePath()
+        guard let first = points.first else { return path }
+        path.move(to: first)
+        for p in points.dropFirst() { path.addLine(to: p) }
+        path.closeSubpath()
+        return path
+    }
+
+    func fillPolygon(_ points: [CGPoint]) {
+        addPath(polygonPath(points))
+        fillPath()
+    }
+
+    func strokePolygon(_ points: [CGPoint], lineWidth: CGFloat) {
+        setLineWidth(lineWidth)
+        setLineCap(.round)
+        setLineJoin(.round)
+        addPath(polygonPath(points))
+        strokePath()
+    }
 }
