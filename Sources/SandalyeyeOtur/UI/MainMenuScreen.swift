@@ -40,9 +40,10 @@ final class MainMenuScreen: Screen {
     func draw(_ c: CGContext, _ vp: Viewport) {
         SceneArtist.draw(c, vp: vp, scroll: totalTime * 12, time: totalTime, theme: .defaultTheme)
 
+        let titleSize = UiArtist.fitTextSize("SANDALYEYE OTUR", maxW: vp.uiWidth * 0.92, preferred: vp.uiWidth * 0.11)
         TextArtist.title(
             c, "SANDALYEYE OTUR", x: vp.centerX, y: vp.designHeight * 0.30,
-            size: vp.uiWidth * 0.11, color: Palette.cream, outlineColor: Palette.ink
+            size: titleSize, color: Palette.cream, outlineColor: Palette.ink
         )
 
         UiArtist.coinBadge(c, cx: vp.centerX - vp.uiWidth * 0.30, cy: vp.safeTop + vp.designHeight * 0.045,
