@@ -52,7 +52,7 @@ final class Fx {
 
     /// Yere carpma / oturma tozu.
     func dust(_ x: CGFloat, _ y: CGFloat, scale: CGFloat, strength: CGFloat = 1) {
-        ring(x, y, r0: scale * 0.35, r1: scale * 1.5, color: UIColor.white.withAlphaComponent(0x66.0 / 255), life: 0.40)
+        ring(x, y, r0: scale * 0.35, r1: scale * 1.5, color: UIColor.white.withAlphaComponent(CGFloat(0x66) / 255), life: 0.40)
         let n = max(2, Int(7 * quality * strength))
         for _ in 0..<n {
             guard let p = spawn(.dust) else { return }
@@ -65,13 +65,13 @@ final class Fx {
             p.size = scale * (0.18 + CGFloat.random(in: 0..<1) * 0.22)
             p.maxLife = 0.45 + CGFloat.random(in: 0..<1) * 0.25
             p.life = p.maxLife
-            p.color = UIColor.white.withAlphaComponent(0xCC.0 / 255)
+            p.color = UIColor.white.withAlphaComponent(CGFloat(0xCC) / 255)
         }
     }
 
     /// Basari yildizlari.
     func burst(_ x: CGFloat, _ y: CGFloat, scale: CGFloat, color: UIColor = Palette.coin) {
-        ring(x, y, r0: scale * 0.3, r1: scale * 2.0, color: color.withAlphaComponent(0x66.0 / 255), life: 0.45)
+        ring(x, y, r0: scale * 0.3, r1: scale * 2.0, color: color.withAlphaComponent(CGFloat(0x66) / 255), life: 0.45)
         let n = max(3, Int(10 * quality))
         for _ in 0..<n {
             guard let p = spawn(.star) else { return }

@@ -93,7 +93,7 @@ enum SceneArtist {
         ctx.fill(CGRect(x: left, y: horizon, width: right - left, height: h * 0.006))
 
         // Oyun bandinin hafif vurgusu - oyuncu nereye bakacagini bilsin
-        ctx.setFillColor(UIColor.white.withAlphaComponent(theme.darkBackdrop ? 0x18.0 / 255 : 0x14.0 / 255).cgColor)
+        ctx.setFillColor(UIColor.white.withAlphaComponent(theme.darkBackdrop ? CGFloat(0x18) / 255 : CGFloat(0x14) / 255).cgColor)
         ctx.fill(CGRect(x: left, y: ground - h * 0.10, width: right - left, height: h * 0.13))
     }
 

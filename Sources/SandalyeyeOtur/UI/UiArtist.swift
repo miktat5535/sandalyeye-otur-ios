@@ -38,7 +38,7 @@ enum UiArtist {
         ctx.fillRoundRect(cx: cx, cy: cy + sink, w: w, h: h, r: r)
 
         // Ust kenarda ince acik serit - plastik parlaklik
-        ctx.setFillColor(UIColor.white.withAlphaComponent(0x33.0 / 255).cgColor)
+        ctx.setFillColor(UIColor.white.withAlphaComponent(CGFloat(0x33) / 255).cgColor)
         ctx.fillRoundRect(cx: cx, cy: cy + sink - h * 0.26, w: w * 0.86, h: h * 0.26, r: h * 0.13)
 
         ctx.setStrokeColor(Palette.uiOutline.cgColor)
@@ -102,7 +102,7 @@ enum UiArtist {
             let rad = i % 2 == 0 ? rr : rr * 0.46
             points.append(CGPoint(x: cx + cos(a) * rad, y: cy + sin(a) * rad))
         }
-        ctx.setFillColor((filled ? Palette.coin : UIColor.white.withAlphaComponent(0x55.0 / 255)).cgColor)
+        ctx.setFillColor((filled ? Palette.coin : UIColor.white.withAlphaComponent(CGFloat(0x55) / 255)).cgColor)
         ctx.fillPolygon(points)
         if filled {
             ctx.saveGState()
