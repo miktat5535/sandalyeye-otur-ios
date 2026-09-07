@@ -19,26 +19,38 @@ workflows:
         script: xcodegen generate
       - name: Boot simulator
         script: |
-          xcrun simctl boot "iPhone 15" || true
-          xcrun simctl bootstatus "iPhone 15" -b
+          # Sabit cihaz adi ("iPhone 15") Codemagic imajinda BULUNMAYABILIR
+          # (Xcode surumune gore mevcut simulator seti degisir). Bu yuzden
+          # runtime'da mevcut cihazlardan en yeni iPhone'u seciyoruz ve
+          # $CM_ENV ile sonraki adimlara aktariyoruz.
+          DEVICE_NAME=$(xcrun simctl list devices available | grep -E "^\s+iPhone" | tail -1 | sed -E 's/^[[:space:]]*//; s/ \(.*//')
+          if [ -z "$DEVICE_NAME" ]; then
+            echo "Kullanilabilir iPhone simulatoru bulunamadi:"
+            xcrun simctl list devices available
+            exit 1
+          fi
+          echo "Secilen simulator: $DEVICE_NAME"
+          echo "DEVICE_NAME=$DEVICE_NAME" >> $CM_ENV
+          xcrun simctl boot "$DEVICE_NAME" || true
+          xcrun simctl bootstatus "$DEVICE_NAME" -b
       - name: Build for simulator
         script: |
           xcodebuild -project SandalyeyeOtur.xcodeproj \
             -scheme "$XCODE_SCHEME" \
             -sdk iphonesimulator \
-            -destination 'platform=iOS Simulator,name=iPhone 15' \
+            -destination "platform=iOS Simulator,name=$DEVICE_NAME" \
             -derivedDataPath build \
             build
       - name: Install & launch on simulator
         script: |
           APP_PATH=$(find build -name "*.app" -path "*iphonesimulator*" | head -1)
-          xcrun simctl install "iPhone 15" "$APP_PATH"
-          xcrun simctl launch "iPhone 15" com.miktat55.sitdown
+          xcrun simctl install "$DEVICE_NAME" "$APP_PATH"
+          xcrun simctl launch "$DEVICE_NAME" com.miktat55.sitdown
           sleep 6
       - name: Capture screenshots
         script: |
           mkdir -p screenshots
-          xcrun simctl io "iPhone 15" screenshot screenshots/01_launch.png
+          xcrun simctl io "$DEVICE_NAME" screenshot screenshots/01_launch.png
     artifacts:
       - screenshots/*.png
       - build/**/*.app
