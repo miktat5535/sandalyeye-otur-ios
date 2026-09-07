@@ -21,7 +21,7 @@ final class GameViewController: UIViewController {
             gameView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
         self.gameView = gameView
-        gameView.screen = MainMenuScreen(services: services)
+        gameView.screen = Self.initialScreen(services: services)
 
         services.onAppLaunched(presenter: self)
 
@@ -45,6 +45,19 @@ final class GameViewController: UIViewController {
 
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+
+    /// Codemagic'in `simulator-preview` is akisi Mac'imiz olmadigi icin TEK
+    /// gorsel dogrulama yontemimiz — o yuzden hangi ekranin acilacagini bir
+    /// launch argument'i belirleyebiliyor: normalde SplashScreen, ama CI
+    /// betigi `-uiTestGameplay` argumaniyla baslatirsa dogrudan gercek
+    /// oynanisa (GameplayScreen) atlar. Boylece CI ekran goruntusunde sadece
+    /// menu degil, Miko'nun sandalyeye oturdugu an da gorulebiliyor.
+    private static func initialScreen(services: Services) -> Screen {
+        if CommandLine.arguments.contains("-uiTestGameplay") {
+            return GameplayScreen(services: services, levelNumber: 1)
+        }
+        return SplashScreen(services: services)
     }
 
     override var prefersStatusBarHidden: Bool { true }

@@ -114,6 +114,12 @@ final class GameView: UIView {
         screen?.onTouch(x: viewport.toDesignX(p.x), y: viewport.toDesignY(p.y), down: true)
     }
 
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let t = touches.first else { return }
+        let p = t.location(in: self)
+        screen?.onTouchMoved(x: viewport.toDesignX(p.x), y: viewport.toDesignY(p.y))
+    }
+
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let t = touches.first else { return }
         let p = t.location(in: self)
@@ -121,7 +127,7 @@ final class GameView: UIView {
     }
 
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        touchesEnded(touches, with: event)
+        screen?.onTouchCancelled()
     }
 
     /// Geri jesti (Android geri tusunun iOS karsiligi yok, ama Screen'lerin

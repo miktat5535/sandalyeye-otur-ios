@@ -47,10 +47,22 @@ workflows:
           xcrun simctl install "$DEVICE_NAME" "$APP_PATH"
           xcrun simctl launch "$DEVICE_NAME" com.miktat55.sitdown
           sleep 6
-      - name: Capture screenshots
+      - name: Capture menu screenshot
         script: |
           mkdir -p screenshots
-          xcrun simctl io "$DEVICE_NAME" screenshot screenshots/01_launch.png
+          xcrun simctl io "$DEVICE_NAME" screenshot screenshots/01_menu.png
+      - name: Launch straight into gameplay and capture
+        script: |
+          # `-uiTestGameplay` GameViewController'da okunuyor: Splash/Menu'yu
+          # atlayip dogrudan GameplayScreen'i acar. Boylece Codemagic'in tek
+          # goruntuledigi sey menu degil, gercek oynanis (Miko + sandalye +
+          # HUD) da CI ekran goruntusunde dogrulanabiliyor.
+          xcrun simctl terminate "$DEVICE_NAME" com.miktat55.sitdown || true
+          xcrun simctl launch "$DEVICE_NAME" com.miktat55.sitdown -uiTestGameplay
+          sleep 3
+          xcrun simctl io "$DEVICE_NAME" screenshot screenshots/02_gameplay_walk.png
+          sleep 3
+          xcrun simctl io "$DEVICE_NAME" screenshot screenshots/03_gameplay_later.png
     artifacts:
       - screenshots/*.png
       - build/**/*.app

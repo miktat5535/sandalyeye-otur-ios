@@ -36,7 +36,7 @@ enum GameConstants {
     /// Miko'nun ayaktan tepeye toplam yuksekligi (tasarim birimi).
     static let mikoHeight: CGFloat = 320
     static let mikoWalkSpeed: CGFloat = 260      // birim/saniye
-    static let mikoStepPeriod: TimeInterval = 0.42 // saniye/adim dongusu
+    static let mikoStepPeriod: CGFloat = 0.42 // saniye/adim dongusu
 
     // MARK: - Sandalye
     static let chairHeight: CGFloat = 260

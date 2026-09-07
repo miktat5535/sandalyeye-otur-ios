@@ -19,6 +19,16 @@ protocol Screen: AnyObject {
     @discardableResult
     func onTouch(x: CGFloat, y: CGFloat, down: Bool) -> Bool
 
+    /// Parmak ekranda gezinirken (Android'deki ACTION_MOVE karsiligi).
+    /// Kaydirilabilir listeler (LevelSelect/Shop) bunu kullanir; cogu ekran
+    /// varsayilan bos govdeyi kullanir.
+    func onTouchMoved(x: CGFloat, y: CGFloat)
+
+    /// Dokunma iptal edildi (ör. sistem jesti araya girdi). Android'deki
+    /// ACTION_CANCEL karsiligi — surukleme/basili durumunu sifirlamak icindir,
+    /// `onTouch(down:false)`'daki "tıklama TAMAMLANDI" anlamini TASIMAZ.
+    func onTouchCancelled()
+
     /// Geri tusu / kapatma jesti. true dondurursen olay tuketilir.
     func onBack() -> Bool
 
@@ -32,6 +42,8 @@ protocol Screen: AnyObject {
 extension Screen {
     func onEnter(_ vp: Viewport) {}
     func onTouch(x: CGFloat, y: CGFloat, down: Bool) -> Bool { false }
+    func onTouchMoved(x: CGFloat, y: CGFloat) {}
+    func onTouchCancelled() {}
     func onBack() -> Bool { false }
     func onExit() {}
 }
