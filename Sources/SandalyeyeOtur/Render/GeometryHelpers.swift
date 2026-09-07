@@ -16,14 +16,22 @@ extension CGContext {
 
 extension CGMutablePath {
     /// Android `RectF` + start/sweep (derece) ile tanimlanan eliptik yayin
-    /// esdegeri. sweepDeg pozitifse ekranda saat yonunde ilerler (flipped
-    /// UIView draw baglaminda `clockwise: true` bunu saglar).
+    /// esdegeri. sweepDeg pozitifse ekranda saat yonunde ilerler.
+    ///
+    /// DIKKAT: `CGContext.addArc`'in `clockwise` parametresi flipped (UIKit
+    /// draw) baglamda bile HER ZAMAN unflipped/matematiksel uzaya gore
+    /// yorumlanir (Apple dokumantasyonu) — yani ekranda GORUNEN saat yonu,
+    /// matematiksel "clockwise"in TERSIDIR. Bu yuzden Android'in ekran-saat-
+    /// yonu tanimini eslemek icin burada `!` ile ters ceviriyoruz. (Ilk
+    /// denemede bu ters olarak birakilmisti ve HAIR_TUFT "kepi" kafanin
+    /// tepesi yerine gozlerin ustunu kaplayan bir bant olarak cikmisti —
+    /// gercek simulator ekran goruntusuyle yakalanip duzeltildi.)
     func addEllipticalArc(cx: CGFloat, cy: CGFloat, rx: CGFloat, ry: CGFloat,
                            startDeg: CGFloat, sweepDeg: CGFloat) {
         let startRad = startDeg * .pi / 180
         let endRad = (startDeg + sweepDeg) * .pi / 180
         let transform = CGAffineTransform(translationX: cx, y: cy).scaledBy(x: rx, y: ry)
         addArc(center: .zero, radius: 1, startAngle: startRad, endAngle: endRad,
-               clockwise: sweepDeg >= 0, transform: transform)
+               clockwise: sweepDeg < 0, transform: transform)
     }
 }
