@@ -57,6 +57,11 @@ final class GameViewController: UIViewController {
         if CommandLine.arguments.contains("-uiTestGameplay") {
             return GameplayScreen(services: services, levelNumber: 1)
         }
+        // App Store ekran goruntuleri icin: magaza (COIN sekmesi) de gorsel
+        // dogrulamaya/pazarlama gorsellerine dahil edilebilsin.
+        if CommandLine.arguments.contains("-uiTestShop") {
+            return ShopScreen(services: services, tab: .coins)
+        }
         return SplashScreen(services: services)
     }
 

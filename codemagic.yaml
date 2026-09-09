@@ -19,11 +19,27 @@ workflows:
         script: xcodegen generate
       - name: Boot simulator
         script: |
-          # Sabit cihaz adi ("iPhone 15") Codemagic imajinda BULUNMAYABILIR
-          # (Xcode surumune gore mevcut simulator seti degisir). Bu yuzden
-          # runtime'da mevcut cihazlardan en yeni iPhone'u seciyoruz ve
-          # $CM_ENV ile sonraki adimlara aktariyoruz.
-          DEVICE_NAME=$(xcrun simctl list devices available | grep -E "^\s+iPhone" | tail -1 | sed -E 's/^[[:space:]]*//; s/ \(.*//')
+          # App Store Connect ekran goruntuleri PIKSEL BAZINDA belirli
+          # boyutlari kabul eder (6.5" kova: 1242x2688 veya 1284x2778).
+          # Rastgele "en yeni iPhone" secilirse (orn. iPhone 17 serisi)
+          # boyut uymayabilir ve yuklenen goruntuler ASC tarafindan
+          # reddedilir. Bu yuzden once TAM o boyutlari ureten bilinen
+          # cihazlari deniyoruz; hicbiri bu Xcode imajinda yoksa (cok eski
+          # simulator kaldirilmis olabilir) en yeni iPhone'a duseriz.
+          PREFERRED="iPhone 14 Plus
+iPhone 13 Pro Max
+iPhone 12 Pro Max
+iPhone 11 Pro Max"
+          DEVICE_NAME=""
+          while IFS= read -r NAME; do
+            if xcrun simctl list devices available | grep -qF "    $NAME ("; then
+              DEVICE_NAME="$NAME"
+              break
+            fi
+          done <<< "$PREFERRED"
+          if [ -z "$DEVICE_NAME" ]; then
+            DEVICE_NAME=$(xcrun simctl list devices available | grep -E "^\s+iPhone" | tail -1 | sed -E 's/^[[:space:]]*//; s/ \(.*//')
+          fi
           if [ -z "$DEVICE_NAME" ]; then
             echo "Kullanilabilir iPhone simulatoru bulunamadi:"
             xcrun simctl list devices available
@@ -63,6 +79,14 @@ workflows:
           xcrun simctl io "$DEVICE_NAME" screenshot screenshots/02_gameplay_walk.png
           sleep 3
           xcrun simctl io "$DEVICE_NAME" screenshot screenshots/03_gameplay_later.png
+      - name: Launch straight into shop and capture
+        script: |
+          # `-uiTestShop` dogrudan magazanin COIN sekmesini acar - App Store
+          # ekran goruntusu setine oyunun parasal ozelliklerini de katmak icin.
+          xcrun simctl terminate "$DEVICE_NAME" com.miktat55.sitdown || true
+          xcrun simctl launch "$DEVICE_NAME" com.miktat55.sitdown -uiTestShop
+          sleep 3
+          xcrun simctl io "$DEVICE_NAME" screenshot screenshots/04_shop.png
     artifacts:
       - screenshots/*.png
       - build/**/*.app
