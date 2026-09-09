@@ -202,7 +202,19 @@ final class GameplayScreen: Screen {
         ctx.playerCommitted = phase == .sitting
 
         // Sandalyeler her fazda yasar (basari/fail ekraninda da hareket eder)
+        //
+        // SWAP davranisi icin `ctx.partner` HER sandalye icin DOGRU es olmali.
+        // Eskiden partner daima `chairs[1]` idi - bu, chairs[1] KENDI davranisini
+        // guncellerken kendi kendine referans vermesine (partner === chair) yol
+        // aciyordu: chairs[1] hicbir zaman gercekten "es"ini takip etmiyor,
+        // bunun yerine chairs[0]'in takasindan sonra eski/guncellenmemis
+        // `scratchA` degeriyle beklenmedik konumlara sicriyordu. Bu da oyuncuya
+        // en yakin sandalyenin YANLISLIKLA sahte sandalye olmasina, boylece
+        // dogru zamanlamada bile oturulamamasina yol aciyordu (bkz. bolum 29/30/92/100).
         for ch in chairs {
+            if chairs.count >= 2, ch.behaviour is SwapBehaviour {
+                ctx.partner = (ch === chairs[0]) ? chairs[1] : chairs[0]
+            }
             ch.behaviour.update(dt: dt, chair: ch, ctx: ctx)
         }
 

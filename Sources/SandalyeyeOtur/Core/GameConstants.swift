@@ -51,6 +51,10 @@ enum GameConstants {
     static let coinLevelComplete: Int = 100
     static let coinThreeStarBonus: Int = 50
     static let coinFirstTryBonus: Int = 100
+    /// "Reklam izle -> coin kazan" (magaza, COIN sekmesi) tek izlemelik odul.
+    /// Bir bolumun taban odulunun yarisi kadar - IAP coin paketlerinin
+    /// degerini dusurmeyecek, ama reklami anlamli kilacak kadar.
+    static let rewardedAdCoinReward: Int = 50
 
     // MARK: - Combo
     static let comboTiers: [Int] = [2, 3, 4, 5, 10]

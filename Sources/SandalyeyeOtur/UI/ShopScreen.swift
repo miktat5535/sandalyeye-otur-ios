@@ -24,6 +24,9 @@ final class ShopScreen: BaseScreen {
     private var t: CGFloat = 0
     private var message = ""
     private var messageTime: CGFloat = 0
+    /// "Reklam izle -> coin kazan" reklami tam ekranda gosterilirken tekrar
+    /// dokunmayi engeller (cift tetiklemeyi onler).
+    private var rewardAdInProgress = false
     private var idlePose: Pose = {
         var p = Pose()
         p.face = .happy
@@ -68,7 +71,9 @@ final class ShopScreen: BaseScreen {
         switch tab {
         case .characters: return CharacterCatalog.all.count
         case .chairs: return ChairCatalog.all.count
-        case .coins: return IapProduct.all.count
+        // +1: listenin basindaki "Reklam izle, coin kazan" karti - satin
+        // almayan/coin'i az olan oyuncuya da bedava bir yol sunar.
+        case .coins: return IapProduct.all.count + 1
         }
     }
 
@@ -97,7 +102,12 @@ final class ShopScreen: BaseScreen {
             switch tab {
             case .characters: drawCharacterCard(c, vp, y: y, ch: ch, i: i)
             case .chairs: drawChairCard(c, vp, y: y, ch: ch, i: i)
-            case .coins: drawCoinCard(c, vp, y: y, ch: ch, i: i)
+            case .coins:
+                if i == 0 {
+                    drawWatchAdCard(c, vp, y: y, ch: ch)
+                } else {
+                    drawCoinCard(c, vp, y: y, ch: ch, i: i - 1)
+                }
             }
         }
         c.restoreGState()
@@ -158,6 +168,35 @@ final class ShopScreen: BaseScreen {
         let selected = e.style.id == services.save.data.selectedChair
         card(c, vp, y: y, ch: ch, i: i, name: e.style.displayName, price: e.price, owned: owned, selected: selected)
         ChairArtist.draw(c, x: vp.centerX - vp.uiWidth * 0.30, groundY: y + ch * 0.34, height: ch * 0.62, style: e.style, turn: 0.12, drawShadow: false)
+    }
+
+    /// "İzle -> Coin Kazan": para harcamadan da coin kazanma yolu. Odul
+    /// YALNIZCA reklam sonuna kadar izlenirse verilir (bkz. activate()).
+    private func drawWatchAdCard(_ c: CGContext, _ vp: Viewport, y: CGFloat, ch: CGFloat) {
+        let w = vp.uiWidth
+        UiArtist.panel(c, cx: vp.centerX, cy: y, w: w * 0.88, h: ch)
+        UiArtist.icon(c, cx: vp.centerX - w * 0.30, cy: y, r: ch * 0.28, kind: .play, color: Palette.hint)
+
+        let name = "Reklam İzle"
+        let subtitle = "+\(GameConstants.rewardedAdCoinReward) Coin kazan"
+        let nameSize = UiArtist.fitTextSize(name, maxW: w * 0.30, preferred: w * 0.052)
+        TextArtist.label(c, name, x: vp.centerX - w * 0.14, y: y - ch * 0.08, size: nameSize, color: Palette.uiTextDark, align: .left)
+        let subSize = UiArtist.fitTextSize(subtitle, maxW: w * 0.30, preferred: w * 0.034)
+        TextArtist.label(c, subtitle, x: vp.centerX - w * 0.14, y: y + ch * 0.02, size: subSize, color: Palette.uiTextDark, align: .left, alpha: 0.65)
+
+        let ready = services.ads.isRewardedReady()
+        let bw = w * 0.24
+        let bh = ch * 0.46
+        UiArtist.button(
+            c, cx: vp.centerX + w * 0.28, cy: y, w: bw, h: bh,
+            label: rewardAdInProgress ? "..." : (ready ? "İZLE" : "-"),
+            pressed: pressedIndex == 0,
+            color: ready ? Palette.success : Palette.uiPanelShade, shade: UIColor(hex: "#33B76B"),
+            depth: 7, enabled: ready && !rewardAdInProgress
+        )
+        if !ready {
+            TextArtist.label(c, "Reklam hazır değil, birazdan tekrar dene", x: vp.centerX - w * 0.14, y: y + ch * 0.22, size: w * 0.032, color: Palette.fail, align: .left)
+        }
     }
 
     private func drawCoinCard(_ c: CGContext, _ vp: Viewport, y: CGFloat, ch: CGFloat, i: Int) {
@@ -368,7 +407,11 @@ final class ShopScreen: BaseScreen {
             }
 
         case .coins:
-            let productId = IapProduct.all[i]
+            if i == 0 {
+                watchAdForCoins()
+                return
+            }
+            let productId = IapProduct.all[i - 1]
             guard services.presenter != nil else {
                 toast("Mağaza şu an kullanılamıyor")
                 return
@@ -388,6 +431,35 @@ final class ShopScreen: BaseScreen {
                 case .unavailable: self.toast("Mağaza bağlantısı yok")
                 case .error: self.toast("Satın alma başarısız")
                 }
+            }
+        }
+    }
+
+    /// "Reklam izle -> coin kazan". Odul YALNIZCA reklam gercekten sonuna
+    /// kadar izlenirse (.earned) verilir; kapatilir/basarisiz olursa
+    /// oyuncu hicbir sey kaybetmez, sadece bilgilendirilir.
+    private func watchAdForCoins() {
+        guard !rewardAdInProgress, services.ads.isRewardedReady() else {
+            toast("Reklam şu an hazır değil")
+            return
+        }
+        rewardAdInProgress = true
+        services.showRewarded(placement: AdPlacement.dailyBoost) { [weak self] result in
+            guard let self else { return }
+            self.rewardAdInProgress = false
+            if result == .earned {
+                self.services.wallet.add(GameConstants.rewardedAdCoinReward)
+                self.services.sound.play(.levelComplete)
+                self.services.haptics.success()
+                self.toast("+\(GameConstants.rewardedAdCoinReward) Coin kazandın!")
+            } else {
+                let msg: String
+                switch result {
+                case .notReady: msg = "Reklam şu an hazır değil"
+                case .dismissed: msg = "Reklam tamamlanmadı"
+                default: msg = "Reklam yüklenemedi"
+                }
+                self.toast(msg)
             }
         }
     }
