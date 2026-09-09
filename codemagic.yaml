@@ -45,6 +45,14 @@ workflows:
           echo "DEVICE_NAME=$DEVICE_NAME" >> $CM_ENV
           xcrun simctl boot "$DEVICE_NAME" || true
           xcrun simctl bootstatus "$DEVICE_NAME" -b
+          # ILK KEZ acilan bir simulator burada "bootstatus" tamamlandi dese
+          # bile arka planda hala ilk kurulum gocu (migration) ve bunu takip
+          # eden bir-iki SpringBoard yeniden baslatmasi surdurebiliyor. Bu
+          # sirada baslatilan uygulama sessizce ana ekrana geri atiliyor
+          # (bkz. 15 numarali build: launch PID donuyor ama ekran goruntusu
+          # hep Ana Ekran'i gosteriyordu). Bu yuzden ekstra bir "otursun"
+          # bekleme suresi veriyoruz.
+          sleep 20
       - name: Build for simulator
         script: |
           xcodebuild -project SandalyeyeOtur.xcodeproj \
@@ -58,10 +66,15 @@ workflows:
           APP_PATH=$(find build -name "*.app" -path "*iphonesimulator*" | head -1)
           xcrun simctl install "$DEVICE_NAME" "$APP_PATH"
           xcrun simctl launch "$DEVICE_NAME" com.miktat55.sitdown
-          sleep 6
+          sleep 8
       - name: Capture menu screenshot
         script: |
           mkdir -p screenshots
+          # Ekran goruntusunden hemen once TEKRAR launch ediyoruz - eger
+          # uygulama arka planda kaldiysa (bir SpringBoard olayi yuzunden)
+          # bu onu tekrar on plana getirir; zaten ondaysa hicbir zarari olmaz.
+          xcrun simctl launch "$DEVICE_NAME" com.miktat55.sitdown
+          sleep 2
           xcrun simctl io "$DEVICE_NAME" screenshot screenshots/01_menu.png
       - name: Launch straight into gameplay and capture
         script: |
@@ -70,8 +83,9 @@ workflows:
           # goruntuledigi sey menu degil, gercek oynanis (Miko + sandalye +
           # HUD) da CI ekran goruntusunde dogrulanabiliyor.
           xcrun simctl terminate "$DEVICE_NAME" com.miktat55.sitdown || true
+          sleep 1
           xcrun simctl launch "$DEVICE_NAME" com.miktat55.sitdown -uiTestGameplay
-          sleep 3
+          sleep 4
           xcrun simctl io "$DEVICE_NAME" screenshot screenshots/02_gameplay_walk.png
           sleep 3
           xcrun simctl io "$DEVICE_NAME" screenshot screenshots/03_gameplay_later.png
@@ -80,8 +94,9 @@ workflows:
           # `-uiTestShop` dogrudan magazanin COIN sekmesini acar - App Store
           # ekran goruntusu setine oyunun parasal ozelliklerini de katmak icin.
           xcrun simctl terminate "$DEVICE_NAME" com.miktat55.sitdown || true
+          sleep 1
           xcrun simctl launch "$DEVICE_NAME" com.miktat55.sitdown -uiTestShop
-          sleep 3
+          sleep 4
           xcrun simctl io "$DEVICE_NAME" screenshot screenshots/04_shop.png
     artifacts:
       - screenshots/*.png
