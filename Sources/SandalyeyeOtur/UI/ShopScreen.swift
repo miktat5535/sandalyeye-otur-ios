@@ -165,22 +165,40 @@ final class ShopScreen: BaseScreen {
         let product = services.billing.products().first { $0.id == id }
         let amount = IapProduct.coinAmount[id]
         let name: String
+        var subtitle = ""
         switch id {
         case IapProduct.removeAds: name = "Reklamları Kaldır"
-        case IapProduct.starterPack: name = "Başlangıç Paketi"
-        case IapProduct.premiumSkin01: name = "Özel Karakter 1"
-        case IapProduct.premiumSkin02: name = "Özel Karakter 2"
+        case IapProduct.starterPack: name = "Başlangıç Paketi"; subtitle = "Robot + Altın Sandalye"
+        case IapProduct.premiumSkin01: name = "Uzaylı Karakteri"; subtitle = "Özel karakter açar"
+        case IapProduct.premiumSkin02: name = "İş Adamı Karakteri"; subtitle = "Özel karakter açar"
         default: name = "\(amount ?? 0) Coin"
         }
         let w = vp.uiWidth
         UiArtist.panel(c, cx: vp.centerX, cy: y, w: w * 0.88, h: ch)
+        // Neyi satin aldigini GORSEL olarak goster - "premium bos gorunuyor"
+        // sikayetinin duzeltmesi: jenerik magaza ikonu yerine gercek karakter/
+        // sandalye onizlemesi (Android'deki ayni tasarim boslugu, yalnizca
+        // burada duzeltiliyor).
         if amount != nil {
             UiArtist.coin(c, cx: vp.centerX - w * 0.30, cy: y, r: ch * 0.28)
+        } else if id == IapProduct.premiumSkin01 {
+            MikoArtist.draw(c, x: vp.centerX - w * 0.30, groundY: y + ch * 0.32, height: ch * 0.62,
+                             pose: idlePose, skin: CharacterCatalog.skin("alien"), drawShadow: false)
+        } else if id == IapProduct.premiumSkin02 {
+            MikoArtist.draw(c, x: vp.centerX - w * 0.30, groundY: y + ch * 0.32, height: ch * 0.62,
+                             pose: idlePose, skin: CharacterCatalog.skin("businessman"), drawShadow: false)
+        } else if id == IapProduct.starterPack {
+            ChairArtist.draw(c, x: vp.centerX - w * 0.30, groundY: y + ch * 0.28, height: ch * 0.50,
+                              style: ChairCatalog.style("chair_gold"), turn: 0, drawShadow: false)
         } else {
             UiArtist.icon(c, cx: vp.centerX - w * 0.30, cy: y, r: ch * 0.28, kind: .shop, color: Palette.orange)
         }
         let nameSize = UiArtist.fitTextSize(name, maxW: w * 0.30, preferred: w * 0.052)
-        TextArtist.label(c, name, x: vp.centerX - w * 0.14, y: y - ch * 0.04, size: nameSize, color: Palette.uiTextDark, align: .left)
+        TextArtist.label(c, name, x: vp.centerX - w * 0.14, y: y - ch * 0.08, size: nameSize, color: Palette.uiTextDark, align: .left)
+        if !subtitle.isEmpty {
+            let subSize = UiArtist.fitTextSize(subtitle, maxW: w * 0.30, preferred: w * 0.034)
+            TextArtist.label(c, subtitle, x: vp.centerX - w * 0.14, y: y + ch * 0.02, size: subSize, color: Palette.uiTextDark, align: .left, alpha: 0.65)
+        }
 
         // Fiyat App Store'dan gelir; yoksa "-" gosterilir. Koda fiyat YAZILMAZ.
         let price = product?.formattedPrice ?? ""
