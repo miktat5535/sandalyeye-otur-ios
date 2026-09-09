@@ -26,17 +26,13 @@ workflows:
           # reddedilir. Bu yuzden once TAM o boyutlari ureten bilinen
           # cihazlari deniyoruz; hicbiri bu Xcode imajinda yoksa (cok eski
           # simulator kaldirilmis olabilir) en yeni iPhone'a duseriz.
-          PREFERRED="iPhone 14 Plus
-iPhone 13 Pro Max
-iPhone 12 Pro Max
-iPhone 11 Pro Max"
           DEVICE_NAME=""
-          while IFS= read -r NAME; do
+          for NAME in "iPhone 14 Plus" "iPhone 13 Pro Max" "iPhone 12 Pro Max" "iPhone 11 Pro Max"; do
             if xcrun simctl list devices available | grep -qF "    $NAME ("; then
               DEVICE_NAME="$NAME"
               break
             fi
-          done <<< "$PREFERRED"
+          done
           if [ -z "$DEVICE_NAME" ]; then
             DEVICE_NAME=$(xcrun simctl list devices available | grep -E "^\s+iPhone" | tail -1 | sed -E 's/^[[:space:]]*//; s/ \(.*//')
           fi
