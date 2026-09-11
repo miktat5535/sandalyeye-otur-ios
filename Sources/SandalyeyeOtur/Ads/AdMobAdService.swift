@@ -1,3 +1,4 @@
+import AppTrackingTransparency
 import GoogleMobileAds
 import UIKit
 import os.log
@@ -43,6 +44,35 @@ final class AdMobAdService: NSObject, AdService {
     }
 
     func initialize() {
+        // Apple ret gerekcesi (2.1 - Information Needed, 2026-09-11): Info.plist'te
+        // NSUserTrackingUsageDescription var (GoogleMobileAds ATT framework'unu
+        // linkliyor) ama kod HICBIR ZAMAN gercek izin isteğini gostermiyordu -
+        // inceleme cihazinda pencere hic cikmadi. Kural: izin istegi, izlemede
+        // kullanilabilecek herhangi bir veri toplanmadan ONCE gorunmeli - bu
+        // yuzden MobileAds.shared.start() ATT sonucunu BEKLIYOR, once cagrilmiyor.
+        requestTrackingAuthorizationIfNeeded { [weak self] in
+            self?.startMobileAds()
+        }
+    }
+
+    /// iOS 14 oncesinde ATT yok - direkt devam eder. Kisa gecikme, pencere tam
+    /// olarak on planda/key olmadan istek sessizce gecebilecegi icin (SDK'nin
+    /// belgelenmis tuzagi) guvenli, yaygin kullanilan bir desen.
+    private func requestTrackingAuthorizationIfNeeded(completion: @escaping () -> Void) {
+        guard #available(iOS 14, *) else {
+            completion()
+            return
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            ATTrackingManager.requestTrackingAuthorization { _ in
+                DispatchQueue.main.async {
+                    completion()
+                }
+            }
+        }
+    }
+
+    private func startMobileAds() {
         MobileAds.shared.start { [weak self] _ in
             guard let self else { return }
             self.initialized = true
