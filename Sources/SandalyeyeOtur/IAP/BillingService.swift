@@ -11,6 +11,12 @@ protocol BillingService: AnyObject {
     func purchase(productId: String, onResult: @escaping (BillingStatus) -> Void)
     /// Acilista cagrilir: kalici urunleri geri yukler, yarim kalanlari tamamlar.
     func restore(onDone: @escaping () -> Void)
+    /// Magaza ekrani her acildiginda cagrilir. Urun listesi zaten doluysa
+    /// hicbir sey yapmaz (ucuz). Bossa (initialize() sirasindaki ilk yukleme
+    /// gecici bir ag/StoreKit gecikmesi yuzunden basarisiz olduysa) sessizce
+    /// yeniden dener - Apple inceleme notu (2026-09-13): "in-app purchase
+    /// items failed to load" reddi bu senaryoya karsi eklendi.
+    func refreshProductsIfNeeded()
     func destroy()
 }
 
@@ -112,5 +118,6 @@ final class NoOpBillingService: BillingService {
     }
 
     func restore(onDone: @escaping () -> Void) { onDone() }
+    func refreshProductsIfNeeded() {}
     func destroy() {}
 }

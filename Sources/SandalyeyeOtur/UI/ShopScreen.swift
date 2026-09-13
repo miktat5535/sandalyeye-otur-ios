@@ -42,6 +42,10 @@ final class ShopScreen: BaseScreen {
     override func onEnter(_ vp: Viewport) {
         scroll = 0
         services.analytics.event(AnalyticsEvent.shopOpened, ["tab": "\(tab)"])
+        // Ilk yukleme (initialize()) gecici bir ag/StoreKit gecikmesi
+        // yuzunden bos/eksik kaldiysa burada sessizce yeniden denenir -
+        // liste zaten tamsa ucuz bir no-op.
+        services.billing.refreshProductsIfNeeded()
     }
 
     private func cardH(_ w: CGFloat) -> CGFloat { w * 0.30 }

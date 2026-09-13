@@ -42,15 +42,38 @@ final class StoreKit2BillingService: BillingService {
         }
     }
 
+    /// Apple ret gerekcesi (2.1(b), 2026-09-13, iPad Air 11" M3): "the in-app
+    /// purchase items failed to load". Kok neden: Product.products(for:) TEK
+    /// SEFER cagriliyordu; inceleme cihazinda gecici bir ag/StoreKit
+    /// gecikmesi (ya da ilk kez gonderilen IAP'lerin henuz tam "cleared for
+    /// sale" olmamasi) yuzunden bos/eksik donerse storeProducts KALICI OLARAK
+    /// bos kaliyordu - uygulama yeniden acilmadan asla duzelmiyordu. Simdi en
+    /// fazla 3 deneme yapiyor (kismi sonucu da her denemede kaydediyor,
+    /// boylece yarida kalinsa bile elimizdeki en iyi veri kullanilir).
     private func loadProducts() async {
-        do {
-            let products = try await Product.products(for: IapProduct.all)
-            var map: [String: Product] = [:]
-            for p in products { map[p.id] = p }
-            storeProducts = map
-        } catch {
-            // Urunler alinamadi (aglantisiz, App Store Connect'te henuz
-            // olusturulmamis, vs.) - magaza ekrani "-" fiyat gosterir.
+        for attempt in 0..<3 {
+            do {
+                let products = try await Product.products(for: IapProduct.all)
+                var map: [String: Product] = [:]
+                for p in products { map[p.id] = p }
+                storeProducts = map
+                if products.count == IapProduct.all.count { return }
+            } catch {
+                // Urunler alinamadi (aglantisiz, App Store Connect'te henuz
+                // olusturulmamis, vs.) - asagida tekrar denenecek.
+            }
+            if attempt < 2 {
+                try? await Task.sleep(nanoseconds: 1_500_000_000)
+            }
+        }
+    }
+
+    /// Magaza ekrani her acildiginda cagrilir - liste zaten tamsa ucuz bir
+    /// no-op, degilse sessizce yeniden dener.
+    func refreshProductsIfNeeded() {
+        guard storeProducts.count < IapProduct.all.count else { return }
+        Task { [weak self] in
+            await self?.loadProducts()
         }
     }
 
