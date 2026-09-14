@@ -62,6 +62,12 @@ final class GameViewController: UIViewController {
         if CommandLine.arguments.contains("-uiTestShop") {
             return ShopScreen(services: services, tab: .coins)
         }
+        // "Satin Almalari Geri Yukle" dugmesinin (Apple 3.1.1 duzeltmesi)
+        // yeni panel yerlesiminde gercekten dogru gorundugunu - baska
+        // elemanlarla cakismadigini - CI ekran goruntusuyle dogrulamak icin.
+        if CommandLine.arguments.contains("-uiTestSettings") {
+            return SettingsScreen(services: services)
+        }
         return SplashScreen(services: services)
     }
 

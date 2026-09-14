@@ -98,6 +98,16 @@ workflows:
           xcrun simctl launch "$DEVICE_NAME" com.miktat55.sitdown -uiTestShop
           sleep 4
           xcrun simctl io "$DEVICE_NAME" screenshot screenshots/04_shop.png
+      - name: Launch straight into settings and capture
+        script: |
+          # `-uiTestSettings` dogrudan Ayarlar ekranini acar - yeni "Satin
+          # Almalari Geri Yukle" dugmesinin (Apple 3.1.1 duzeltmesi) yerlesimini
+          # gercek simulator goruntusuyle dogrulamak icin.
+          xcrun simctl terminate "$DEVICE_NAME" com.miktat55.sitdown || true
+          sleep 1
+          xcrun simctl launch "$DEVICE_NAME" com.miktat55.sitdown -uiTestSettings
+          sleep 4
+          xcrun simctl io "$DEVICE_NAME" screenshot screenshots/05_settings.png
     artifacts:
       - screenshots/*.png
       - build/**/*.app
