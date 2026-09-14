@@ -36,13 +36,29 @@ final class SettingsScreen: BaseScreen {
 
     private func rowY(_ i: Int, _ h: CGFloat) -> CGFloat { safeTop + h * 0.26 + CGFloat(i) * (h * 0.085) }
 
+    /// draw() ve onTouch() AYNI konumlari kullanmali - iki yerde ayri ayri
+    /// sabit sayilar yazip senkron kaybetmemek icin tek yerden hesaplanir.
+    private func restoreButtonY(_ h: CGFloat) -> CGFloat { rowY(4, h) + h * 0.115 }
+    private func versionTextY(_ h: CGFloat) -> CGFloat { rowY(4, h) + h * 0.19 }
+    private func closeButtonY(_ h: CGFloat) -> CGFloat { rowY(4, h) + h * 0.255 }
+
     override func draw(_ c: CGContext, _ vp: Viewport) {
         let w = vp.uiWidth
         let h = vp.designHeight
         SceneArtist.draw(c, vp: vp, scroll: 0, time: t, theme: .defaultTheme)
         UiArtist.scrim(c, w: vp.designWidth, h: h, alpha: 0.40)
 
-        UiArtist.panel(c, cx: vp.centerX, cy: h * 0.47, w: w * 0.88, h: h * 0.58)
+        // NOT (2026-09-14): panel ve tum icerik artik UCTAN UCA safeTop'a gore
+        // TUTARLI konumlaniyor (eskiden panel/Surum/KAPAT sabit "h * X" idi ama
+        // toggle satirlari "safeTop + h * X" idi - cihaza gore (Dynamic Island
+        // vb.) safeTop buyudukce bu ikisi CI'da hic gorulemeden cakisabilirdi).
+        // Simdi HER SEY rowY tabanli, panel yuksekligi de icerige gore turetiliyor.
+        let panelTop = safeTop + h * 0.225
+        let restoreY = restoreButtonY(h)
+        let versionY = versionTextY(h)
+        let closeY = closeButtonY(h)
+        let panelBottom = closeY + w * 0.09
+        UiArtist.panel(c, cx: vp.centerX, cy: (panelTop + panelBottom) / 2, w: w * 0.88, h: panelBottom - panelTop)
 
         TextArtist.title(c, "AYARLAR", x: vp.centerX, y: safeTop + h * 0.215, size: w * 0.075, color: Palette.orange, outlineColor: Palette.ink)
 
@@ -61,24 +77,22 @@ final class SettingsScreen: BaseScreen {
 
         // Satin Almalari Geri Yukle - Apple 3.1.1: otomatik (acilista sessiz)
         // geri yukleme yeterli degil, dokunulabilir AYRI bir dugme sart.
-        let ry = h * 0.635
         UiArtist.button(
-            c, cx: vp.centerX, cy: ry, w: w * 0.62, h: w * 0.105,
+            c, cx: vp.centerX, cy: restoreY, w: w * 0.62, h: w * 0.105,
             label: restoreInProgress ? "GERİ YÜKLENİYOR..." : "Satın Almaları Geri Yükle",
             pressed: pressed == 101, color: Palette.uiPanelShade, shade: Palette.uiPanel,
             textColor: Palette.uiTextDark, enabled: !restoreInProgress
         )
         if restoreMessageTime > 0 {
             let a = min(restoreMessageTime / 0.4, 1)
-            TextArtist.label(c, restoreMessage, x: vp.centerX, y: ry + w * 0.09, size: w * 0.032, color: Palette.success, alpha: a)
+            TextArtist.label(c, restoreMessage, x: vp.centerX, y: restoreY + w * 0.075, size: w * 0.030, color: Palette.success, alpha: a)
         }
 
         let version = (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "1.0"
-        TextArtist.label(c, "Sürüm \(version)", x: vp.centerX, y: h * 0.70, size: w * 0.032, color: Palette.uiTextDark)
+        TextArtist.label(c, "Sürüm \(version)", x: vp.centerX, y: versionY, size: w * 0.032, color: Palette.uiTextDark)
 
         // Kapat
-        let by = h * 0.755
-        UiArtist.button(c, cx: vp.centerX, cy: by, w: w * 0.48, h: w * 0.14, label: "KAPAT", pressed: pressed == 100, color: Palette.orange, shade: Palette.orangeDark)
+        UiArtist.button(c, cx: vp.centerX, cy: closeY, w: w * 0.48, h: w * 0.14, label: "KAPAT", pressed: pressed == 100, color: Palette.orange, shade: Palette.orangeDark)
     }
 
     private func toggleRow(_ c: CGContext, _ vp: Viewport, _ i: Int, _ label: String, _ on: Bool, _ icon: UiArtist.Icon) {
@@ -112,9 +126,9 @@ final class SettingsScreen: BaseScreen {
         let h = vh
 
         let hit: Int
-        if UiArtist.hit(x, y, cx, h * 0.755, w * 0.48, w * 0.14) {
+        if UiArtist.hit(x, y, cx, closeButtonY(h), w * 0.48, w * 0.14) {
             hit = 100
-        } else if UiArtist.hit(x, y, cx, h * 0.635, w * 0.62, w * 0.105) {
+        } else if UiArtist.hit(x, y, cx, restoreButtonY(h), w * 0.62, w * 0.105) {
             hit = 101
         } else if let idx = (0..<4).first(where: { UiArtist.hit(x, y, cx, rowY($0, h), w * 0.76, h * 0.070) }) {
             hit = idx
