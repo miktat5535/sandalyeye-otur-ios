@@ -11,6 +11,12 @@ final class SettingsScreen: BaseScreen {
     private var t: CGFloat = 0
     private var pressed = -1
     private var pendingBack = false
+    /// Apple ret gerekcesi (3.1.1 Business - Payments, 2026-09-14): otomatik
+    /// (acilista sessizce calisan) geri yukleme YETERLI DEGIL - kullanicinin
+    /// dokunabilecegi AYRI bir "Satin Almalari Geri Yukle" dugmesi sart.
+    private var restoreInProgress = false
+    private var restoreMessage = ""
+    private var restoreMessageTime: CGFloat = 0
 
     init(services: Services) {
         self.services = services
@@ -20,6 +26,7 @@ final class SettingsScreen: BaseScreen {
     override func onUpdate(_ dt: CGFloat, _ vp: Viewport) {
         t += dt
         services.tick(dt)
+        if restoreMessageTime > 0 { restoreMessageTime -= dt }
         if pendingBack {
             pendingBack = false
             services.save.flush()
@@ -35,7 +42,7 @@ final class SettingsScreen: BaseScreen {
         SceneArtist.draw(c, vp: vp, scroll: 0, time: t, theme: .defaultTheme)
         UiArtist.scrim(c, w: vp.designWidth, h: h, alpha: 0.40)
 
-        UiArtist.panel(c, cx: vp.centerX, cy: h * 0.44, w: w * 0.88, h: h * 0.52)
+        UiArtist.panel(c, cx: vp.centerX, cy: h * 0.47, w: w * 0.88, h: h * 0.58)
 
         TextArtist.title(c, "AYARLAR", x: vp.centerX, y: safeTop + h * 0.215, size: w * 0.075, color: Palette.orange, outlineColor: Palette.ink)
 
@@ -45,17 +52,32 @@ final class SettingsScreen: BaseScreen {
         toggleRow(c, vp, 2, "Titreşim", d.hapticEnabled, .vibrate)
         toggleRow(c, vp, 3, "Kolay mod", d.easyMode, .play)
 
-        // Bilgi
-        TextArtist.label(c, "Kolay modda oturma toleransı genişler.", x: vp.centerX, y: rowY(4, h) + h * 0.01, size: w * 0.036, color: Palette.uiTextDark)
+        // Bilgi - tek satira sigdirildi, alta "Satin Almalari Geri Yukle"
+        // dugmesine yer acmak icin.
         TextArtist.label(
             c, "Toplam oturuş: \(d.totalSits)   En iyi kombo: \(d.bestCombo)",
-            x: vp.centerX, y: rowY(4, h) + h * 0.045, size: w * 0.036, color: Palette.uiTextDark
+            x: vp.centerX, y: rowY(4, h) + h * 0.02, size: w * 0.036, color: Palette.uiTextDark
         )
+
+        // Satin Almalari Geri Yukle - Apple 3.1.1: otomatik (acilista sessiz)
+        // geri yukleme yeterli degil, dokunulabilir AYRI bir dugme sart.
+        let ry = h * 0.635
+        UiArtist.button(
+            c, cx: vp.centerX, cy: ry, w: w * 0.62, h: w * 0.105,
+            label: restoreInProgress ? "GERİ YÜKLENİYOR..." : "Satın Almaları Geri Yükle",
+            pressed: pressed == 101, color: Palette.uiPanelShade, shade: Palette.uiPanel,
+            textColor: Palette.uiTextDark, enabled: !restoreInProgress
+        )
+        if restoreMessageTime > 0 {
+            let a = min(restoreMessageTime / 0.4, 1)
+            TextArtist.label(c, restoreMessage, x: vp.centerX, y: ry + w * 0.09, size: w * 0.032, color: Palette.success, alpha: a)
+        }
+
         let version = (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "1.0"
-        TextArtist.label(c, "Sürüm \(version)", x: vp.centerX, y: h * 0.66, size: w * 0.032, color: Palette.uiTextDark)
+        TextArtist.label(c, "Sürüm \(version)", x: vp.centerX, y: h * 0.70, size: w * 0.032, color: Palette.uiTextDark)
 
         // Kapat
-        let by = h * 0.72
+        let by = h * 0.755
         UiArtist.button(c, cx: vp.centerX, cy: by, w: w * 0.48, h: w * 0.14, label: "KAPAT", pressed: pressed == 100, color: Palette.orange, shade: Palette.orangeDark)
     }
 
@@ -90,8 +112,10 @@ final class SettingsScreen: BaseScreen {
         let h = vh
 
         let hit: Int
-        if UiArtist.hit(x, y, cx, h * 0.72, w * 0.48, w * 0.14) {
+        if UiArtist.hit(x, y, cx, h * 0.755, w * 0.48, w * 0.14) {
             hit = 100
+        } else if UiArtist.hit(x, y, cx, h * 0.635, w * 0.62, w * 0.105) {
+            hit = 101
         } else if let idx = (0..<4).first(where: { UiArtist.hit(x, y, cx, rowY($0, h), w * 0.76, h * 0.070) }) {
             hit = idx
         } else {
@@ -112,6 +136,7 @@ final class SettingsScreen: BaseScreen {
                 case 2: d.hapticEnabled.toggle()
                 case 3: d.easyMode.toggle()
                 case 100: pendingBack = true
+                case 101: restorePurchases()
                 default: break
                 }
                 services.save.markDirty()
@@ -120,6 +145,25 @@ final class SettingsScreen: BaseScreen {
             pressed = -1
         }
         return true
+    }
+
+    /// Apple 3.1.1: kullanicinin ELIYLE tetikledigi, gorunur geri bildirimli
+    /// bir geri yukleme akisi. Acilistaki sessiz otomatik restore (bkz.
+    /// Services.swift init) bunun YERINE GECMEZ - ikisi de var olmali.
+    private func restorePurchases() {
+        guard !restoreInProgress else { return }
+        restoreInProgress = true
+        let ownedBefore = Set(services.billing.products().filter { $0.owned }.map { $0.id })
+        services.billing.restore { [weak self] in
+            guard let self else { return }
+            self.restoreInProgress = false
+            let ownedAfter = Set(self.services.billing.products().filter { $0.owned }.map { $0.id })
+            self.restoreMessage = ownedAfter.count > ownedBefore.count
+                ? "Satın almalar geri yüklendi"
+                : "Geri yüklenecek satın alma bulunamadı"
+            self.restoreMessageTime = 2.4
+            self.services.sound.play(.button)
+        }
     }
 
     override func onBack() -> Bool {
