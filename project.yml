@@ -40,6 +40,14 @@ targets:
         TARGETED_DEVICE_FAMILY: "1"
         INFOPLIST_KEY_UILaunchScreen_Generation: NO
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        # Proje-seviyesindeki MARKETING_VERSION burada da tekrarlanir: Apple
+        # yayinlama sirasinda "1.0 CFBundleShortVersionString onceki
+        # onaylanandan yuksek olmali" diye reddetti (build #13) - IPA'nin
+        # gercek Info.plist'i incelenince proje-seviyesi degerin (yalnizca
+        # settings.base'te) hedefe (target) gecmedigi goruldu. Xcode'un
+        # hedef-seviyesi ayar cozumlemesine guvenmek yerine burada acikca
+        # tekrarlanarak garanti altina alindi.
+        MARKETING_VERSION: "1.0.1"
     dependencies:
       - package: GoogleMobileAds
     scheme:
