@@ -23,6 +23,16 @@ targets:
     info:
       path: Sources/SandalyeyeOtur/Info.plist
       properties:
+        # ONEMLI: bu iki anahtar acikca burada olmali. XcodeGen'in urettigi
+        # Info.plist'te bunlar hic YOKTU (yalnizca MARKETING_VERSION/
+        # CURRENT_PROJECT_VERSION build ayari olarak tanimlamak yetmiyordu -
+        # build #13 ve #20'de dogrulandi: derlenen .app/.ipa'nin GERCEK
+        # Info.plist'i hala "1.0"/"1" cikti, cunku anahtar yoksa Xcode
+        # kendi varsayilanina duser). $(VAR) yer tutucusu ile anahtari
+        # ACIKCA var ederek Xcode'un build-setting -> Info.plist
+        # ikamesini garanti altina aliyoruz.
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
         CFBundleDisplayName: Sandalyeye Otur
         UILaunchScreen: {}
         UISupportedInterfaceOrientations:
