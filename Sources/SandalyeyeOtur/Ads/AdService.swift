@@ -11,6 +11,12 @@ protocol AdService: AnyObject {
     func isRewardedReady() -> Bool
     func showRewarded(placement: String, onResult: @escaping (AdServiceRewardResult) -> Void)
     func maybeShowInterstitial(placement: String, onClosed: @escaping () -> Void)
+    /// Odullu gecis reklami (AdMob'un onerdigi "Rewarded Interstitial" formati):
+    /// normal Gecis (otomatik, odulsuz) ile Odullu (opt-in) arasinda bir melez -
+    /// sıklık kurallari saglaniyorsa OTOMATIK gosterilir (oyuncu "izle" demez)
+    /// ama sonuna kadar izlerse kucuk bir odul de kazanir. Hazir degilse ya da
+    /// kosullar saglanmiyorsa ANINDA .notReady doner, oyuncu asla bekletilmez.
+    func maybeShowRewardedInterstitial(placement: String, onResult: @escaping (AdServiceRewardResult) -> Void)
     /// Sıklık sayacini besler.
     func onLevelCompleted()
     func destroy()
@@ -97,6 +103,10 @@ final class NoOpAdService: AdService {
 
     func maybeShowInterstitial(placement: String, onClosed: @escaping () -> Void) {
         onClosed()
+    }
+
+    func maybeShowRewardedInterstitial(placement: String, onResult: @escaping (AdServiceRewardResult) -> Void) {
+        onResult(.notReady)
     }
 
     func onLevelCompleted() {}

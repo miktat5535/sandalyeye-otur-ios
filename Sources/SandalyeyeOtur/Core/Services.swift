@@ -56,7 +56,8 @@ final class Services {
         // kaynaklarinin ayni karsiligi. (bkz. AdMobAdService.kt cagri yeri)
         ads = AdMobAdService(
             rewardedAdUnitID: "ca-app-pub-8580294286333632/7884844933",
-            interstitialAdUnitID: "ca-app-pub-8580294286333632/2778294815"
+            interstitialAdUnitID: "ca-app-pub-8580294286333632/2778294815",
+            rewardedInterstitialAdUnitID: "ca-app-pub-8580294286333632/1064860106"
         )
         billing = StoreKit2BillingService(granter: granter)
     }
@@ -72,10 +73,29 @@ final class Services {
     }
 
     /// Gecis reklami: sıklık kurallari saglaniyorsa goster, degilse aninda devam.
+    /// NOT: Bolum gecisinde artik bu DEGIL, `maybeShowRewardedInterstitial`
+    /// kullanilir (AdMob'un onerdigi hibrit format) - bu metot API
+    /// tamamlanmasi icin duruyor, cagiran yer yok.
     func maybeShowInterstitial(placement: String, onClosed: @escaping () -> Void) {
         guard adPolicy.canShow() else { onClosed(); return }
         adPolicy.onInterstitialShown()
         ads.maybeShowInterstitial(placement: placement, onClosed: onClosed)
+    }
+
+    /// Odullu gecis reklami: sıklık kurallari saglaniyorsa OTOMATIK goster
+    /// (AdMob'un onerdigi hibrit format - normal Gecis ile Odullu arasinda).
+    /// Saglanmiyorsa ya da reklam hazir degilse ANINDA .notReady doner,
+    /// oyuncu asla bekletilmez. Odul YALNIZCA earned sonucunda verilir.
+    func maybeShowRewardedInterstitial(placement: String, onResult: @escaping (AdServiceRewardResult) -> Void) {
+        guard adPolicy.canShow() else { onResult(.notReady); return }
+        adPolicy.onInterstitialShown()
+        analytics.event(AnalyticsEvent.rewardedAdStarted, ["placement": placement])
+        ads.maybeShowRewardedInterstitial(placement: placement) { [weak self] result in
+            if result == .earned {
+                self?.analytics.event(AnalyticsEvent.rewardedAdCompleted, ["placement": placement])
+            }
+            onResult(result)
+        }
     }
 
     /// Odullu reklam: odul YALNIZCA earned sonucunda verilir.

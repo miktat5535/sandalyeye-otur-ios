@@ -55,6 +55,11 @@ enum GameConstants {
     /// Bir bolumun taban odulunun yarisi kadar - IAP coin paketlerinin
     /// degerini dusurmeyecek, ama reklami anlamli kilacak kadar.
     static let rewardedAdCoinReward: Int = 50
+    /// Bolumler arasi OTOMATIK gosterilen odullu gecis reklaminin (Rewarded
+    /// Interstitial) oduli. `rewardedAdCoinReward`dan kasitli olarak dusuk -
+    /// bu reklam magazadaki opt-in "izle->kazan" gibi bilinclice tercih
+    /// edilmiyor, kendiliginden cikiyor; deger dusurmemesi icin kucuk tutuldu.
+    static let rewardedInterstitialCoinReward: Int = 10
 
     // MARK: - Combo
     static let comboTiers: [Int] = [2, 3, 4, 5, 10]

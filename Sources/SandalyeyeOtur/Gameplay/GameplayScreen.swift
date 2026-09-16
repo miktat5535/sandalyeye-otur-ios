@@ -446,14 +446,23 @@ final class GameplayScreen: Screen {
     private var pendingInterstitial = false
 
     private func advance(_ vp: Viewport) {
-        // Gecis reklami BOLUMLER ARASINDA, sonuc ekrani kapandiktan sonra.
-        // Sıklık kurallarini Services.maybeShowInterstitial uygular; kosullar
-        // saglanmiyorsa aninda devam eder, oyuncu bekletilmez.
+        // Odullu gecis reklami (Rewarded Interstitial) BOLUMLER ARASINDA,
+        // sonuc ekrani kapandiktan sonra. Sıklık kurallarini
+        // Services.maybeShowRewardedInterstitial uygular; kosullar
+        // saglanmiyorsa ya da reklam hazir degilse aninda devam eder, oyuncu
+        // bekletilmez. Reklam sonuna kadar izlenirse kucuk bir coin odulu de
+        // verilir - AdMob'un onerdigi, normal Gecis ile Odullu arasindaki
+        // hibrit format.
         if pendingInterstitial {
             pendingInterstitial = false
             adInProgress = true
-            services.maybeShowInterstitial(placement: AdPlacement.levelDouble) { [weak self] in
-                self?.adInProgress = false
+            services.maybeShowRewardedInterstitial(placement: AdPlacement.levelDouble) { [weak self] result in
+                guard let self else { return }
+                self.adInProgress = false
+                if result == .earned {
+                    self.services.wallet.add(GameConstants.rewardedInterstitialCoinReward)
+                    self.toast("+\(GameConstants.rewardedInterstitialCoinReward) Coin kazandın!", 1.4)
+                }
             }
         }
         if endless {

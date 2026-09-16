@@ -24,23 +24,30 @@ final class AdMobAdService: NSObject, AdService {
 
     private let rewardedAdUnitID: String
     private let interstitialAdUnitID: String
+    private let rewardedInterstitialAdUnitID: String
 
     private var rewardedAd: RewardedAd?
     private var interstitialAd: InterstitialAd?
+    private var rewardedInterstitialAd: RewardedInterstitialAd?
 
     private var initialized = false
     private var rewardedLoading = false
     private var interstitialLoading = false
+    private var rewardedInterstitialLoading = false
     private var rewardedFailures = 0
     private var interstitialFailures = 0
+    private var rewardedInterstitialFailures = 0
 
     private var pendingRewardResult: ((AdServiceRewardResult) -> Void)?
     private var earnedThisShow = false
     private var pendingInterstitialClosed: (() -> Void)?
+    private var pendingRewardedInterstitialResult: ((AdServiceRewardResult) -> Void)?
+    private var earnedThisShowRI = false
 
-    init(rewardedAdUnitID: String, interstitialAdUnitID: String) {
+    init(rewardedAdUnitID: String, interstitialAdUnitID: String, rewardedInterstitialAdUnitID: String) {
         self.rewardedAdUnitID = rewardedAdUnitID
         self.interstitialAdUnitID = interstitialAdUnitID
+        self.rewardedInterstitialAdUnitID = rewardedInterstitialAdUnitID
     }
 
     func initialize() {
@@ -86,6 +93,7 @@ final class AdMobAdService: NSObject, AdService {
     private func preload() {
         loadRewarded()
         loadInterstitial()
+        loadRewardedInterstitial()
     }
 
     // ------------------------------------------------------------- odullu
@@ -165,17 +173,63 @@ final class AdMobAdService: NSObject, AdService {
         ad.present(from: presenter)
     }
 
+    // ----------------------------------------------------- odullu gecis
+
+    private func loadRewardedInterstitial() {
+        guard initialized, !rewardedInterstitialLoading, rewardedInterstitialAd == nil else { return }
+        guard rewardedInterstitialFailures < Self.maxFailures else { return }
+        guard !rewardedInterstitialAdUnitID.isEmpty else { return }
+
+        rewardedInterstitialLoading = true
+        RewardedInterstitialAd.load(with: rewardedInterstitialAdUnitID, request: request()) { [weak self] ad, error in
+            guard let self else { return }
+            self.rewardedInterstitialLoading = false
+            if let error {
+                self.rewardedInterstitialAd = nil
+                self.rewardedInterstitialFailures += 1
+                Self.logger.warning("Odullu gecis yuklenemedi: \(error.localizedDescription, privacy: .public)")
+                return
+            }
+            ad?.fullScreenContentDelegate = self
+            self.rewardedInterstitialAd = ad
+            self.rewardedInterstitialFailures = 0
+        }
+    }
+
+    /// Sıklık kurallari [InterstitialPolicy] cagiran yerde (Services) uygulanir;
+    /// bu metot yalnizca "gosterebiliyorsam goster" der. Hazir degilse ANINDA
+    /// .notReady doner - oyuncu reklam yuklenmesini beklemez, bolum gecisi
+    /// akmaya devam eder.
+    func maybeShowRewardedInterstitial(placement: String, onResult: @escaping (AdServiceRewardResult) -> Void) {
+        guard let presenter = Services.shared.presenter, let ad = rewardedInterstitialAd else {
+            loadRewardedInterstitial()
+            onResult(.notReady)
+            return
+        }
+
+        // Odul YALNIZCA kazanim geri cagrisiyla verilir - reklam kapatilirsa,
+        // hata verirse veya yarida birakilirsa odul YOKTUR (rewardedAd ile ayni kural).
+        earnedThisShowRI = false
+        pendingRewardedInterstitialResult = onResult
+        ad.present(from: presenter) { [weak self] in
+            self?.earnedThisShowRI = true
+        }
+    }
+
     func onLevelCompleted() {
         // Bir sonraki gosterim icin stok tazele.
         loadRewarded()
         loadInterstitial()
+        loadRewardedInterstitial()
     }
 
     func destroy() {
         rewardedAd = nil
         interstitialAd = nil
+        rewardedInterstitialAd = nil
         pendingRewardResult = nil
         pendingInterstitialClosed = nil
+        pendingRewardedInterstitialResult = nil
     }
 }
 
@@ -194,6 +248,12 @@ extension AdMobAdService: FullScreenContentDelegate {
             let cb = pendingInterstitialClosed
             pendingInterstitialClosed = nil
             cb?()
+        } else if ad === rewardedInterstitialAd {
+            rewardedInterstitialAd = nil
+            loadRewardedInterstitial()
+            let cb = pendingRewardedInterstitialResult
+            pendingRewardedInterstitialResult = nil
+            cb?(.failed)
         }
     }
 
@@ -210,6 +270,12 @@ extension AdMobAdService: FullScreenContentDelegate {
             let cb = pendingInterstitialClosed
             pendingInterstitialClosed = nil
             cb?()
+        } else if ad === rewardedInterstitialAd {
+            rewardedInterstitialAd = nil
+            loadRewardedInterstitial()
+            let cb = pendingRewardedInterstitialResult
+            pendingRewardedInterstitialResult = nil
+            cb?(earnedThisShowRI ? .earned : .dismissed)
         }
     }
 }
